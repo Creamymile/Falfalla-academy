@@ -13,6 +13,7 @@ export type Route =
   | { name: "admin" }
   | { name: "login" }
   | { name: "redeem" }
+  | { name: "reset-password" }
   | { name: "terms" }
   | { name: "privacy" }
   | { name: "notFound" };
@@ -34,9 +35,13 @@ export function routeFromHash(): Route {
   if (parts[0] === "admin") return { name: "admin" };
   if (parts[0] === "login") return { name: "login" };
   if (parts[0] === "redeem") return { name: "redeem" };
+  if (parts[0] === "reset-password") return { name: "reset-password" };
   if (parts[0] === "terms") return { name: "terms" };
   if (parts[0] === "privacy") return { name: "privacy" };
   if (parts.length === 0 || !parts[0]) return { name: "home" };
+  // Supabase recovery/auth redirects put tokens in the hash — treat as home
+  // (the auth state listener will navigate to the correct page)
+  if (hash.includes("access_token=") || hash.includes("type=recovery")) return { name: "home" };
   return { name: "notFound" };
 }
 
@@ -56,6 +61,7 @@ export function pathFor(route: Route) {
     case "admin": return "#/admin";
     case "login": return "#/login";
     case "redeem": return "#/redeem";
+    case "reset-password": return "#/reset-password";
     case "terms": return "#/terms";
     case "privacy": return "#/privacy";
     case "notFound": return "#/404";

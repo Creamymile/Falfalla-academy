@@ -21,9 +21,12 @@ import { Profile, Certificate } from "./pages/Profile";
 import { Admin } from "./pages/Admin";
 import { Login } from "./pages/Login";
 import { Redeem } from "./pages/Redeem";
+import { ResetPassword } from "./pages/ResetPassword";
 import { TermsOfService, PrivacyPolicy } from "./pages/Legal";
 import { Footer } from "./components/Footer";
 import { clearSession, startSessionHeartbeat } from "./services/access";
+import { getCurrentUser, loadCourseAccess, signOut as supabaseSignOut } from "./services/auth";
+import { supabase } from "./lib/supabase";
 
 function normalizeCourses(courses: Course[]): Course[] {
   return courses
@@ -69,10 +72,128 @@ export function App() {
     return () => window.removeEventListener("hashchange", sync);
   }, []);
 
+  // Per-page document.title for SEO and browser tabs
+  useEffect(() => {
+    const base = "Falfalla Academy";
+    const titles: Record<string, string> = {
+      home: `${base} | Latte Art Mastery`,
+      courses: `Courses | ${base}`,
+      dashboard: `Dashboard | ${base}`,
+      gallery: `Community Gallery | ${base}`,
+      upload: `Upload Practice | ${base}`,
+      pricing: `Pricing | ${base}`,
+      profile: `Profile | ${base}`,
+      certificate: `Certificate | ${base}`,
+      checkout: `Checkout | ${base}`,
+      admin: `Admin | ${base}`,
+      login: `Sign In | ${base}`,
+      redeem: `Redeem Code | ${base}`,
+      "reset-password": `Reset Password | ${base}`,
+      terms: `Terms of Service | ${base}`,
+      privacy: `Privacy Policy | ${base}`,
+      notFound: `Page Not Found | ${base}`,
+    };
+    if (route.name === "course" && "slug" in route) {
+      const c = courseContent.find((c) => c.slug === route.slug);
+      document.title = c ? `${c.title} | ${base}` : titles.courses;
+    } else if (route.name === "lesson" && "slug" in route) {
+      const c = courseContent.find((c) => c.slug === route.slug);
+      document.title = c ? `${c.title} — Lesson | ${base}` : titles.courses;
+    } else {
+      document.title = titles[route.name] ?? titles.home;
+    }
+  }, [route, courseContent]);
+
   useEffect(() => saveState(student), [student]);
   useEffect(() => window.localStorage.setItem(CONTENT_KEY, JSON.stringify(normalizeCourses(courseContent))), [courseContent]);
   useEffect(() => window.localStorage.setItem(REQUESTS_KEY, JSON.stringify(lessonRequests)), [lessonRequests]);
   useEffect(() => window.localStorage.setItem(UPLOADS_KEY, JSON.stringify(uploads)), [uploads]);
+
+  // Track whether the current page load is a password-recovery redirect
+  const [recoveryReady, setRecoveryReady] = useState(false);
+
+  // Restore Supabase session on load
+  useEffect(() => {
+    let isRecoveryRedirect = false;
+
+    async function init() {
+      // ── 1. Detect PKCE recovery code in the URL ──
+      // Supabase PKCE adds ?code=xxx to the redirect URL.
+      // We must exchange it for a session BEFORE anything else.
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+
+      if (code) {
+        try {
+          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+          if (!error && data.session) {
+            // Check if this is a recovery flow
+            // The session user will have aal1 and the event won't tell us,
+            // so we check the URL for type=recovery or just treat code exchanges
+            // that land on the root as potential recovery.
+            isRecoveryRedirect = true;
+            setRecoveryReady(true);
+            window.location.hash = "#/reset-password";
+            // Clean the URL so the code isn't reused on refresh
+            window.history.replaceState({}, "", window.location.pathname + window.location.hash);
+            return; // Skip normal session restore — we're in recovery mode
+          }
+        } catch {
+          // Code exchange failed — fall through to normal init
+        }
+        // Clean the code from the URL even on failure
+        window.history.replaceState({}, "", window.location.pathname + window.location.hash);
+      }
+
+      // ── 2. Also detect implicit-flow recovery tokens in the hash ──
+      const hashStr = window.location.hash.replace(/^#/, "");
+      if (hashStr.includes("access_token=") && hashStr.includes("type=recovery")) {
+        isRecoveryRedirect = true;
+        // Supabase client auto-detects these; just wait for the event
+      }
+
+      // ── 3. Normal session restore ──
+      const result = await getCurrentUser();
+      if (result.ok && result.student) {
+        const access = await loadCourseAccess();
+        setStudent((prev) => ({
+          ...prev,
+          ...result.student,
+          courseAccess: access.length > 0 ? access : prev.courseAccess,
+        }));
+      }
+    }
+
+    init();
+
+    // Listen for auth state changes (e.g. email confirmation redirect)
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
+      if (event === "SIGNED_IN" && session?.user) {
+        // If this sign-in is actually a recovery redirect, don't restore profile
+        if (isRecoveryRedirect) return;
+        const result = await getCurrentUser();
+        if (result.ok && result.student) {
+          const access = await loadCourseAccess();
+          setStudent((prev) => ({
+            ...prev,
+            ...result.student,
+            courseAccess: access.length > 0 ? access : prev.courseAccess,
+          }));
+        }
+      }
+      if (event === "PASSWORD_RECOVERY") {
+        // User clicked the password reset link — send them to the reset form
+        isRecoveryRedirect = true;
+        setRecoveryReady(true);
+        window.location.hash = "#/reset-password";
+      }
+      if (event === "SIGNED_OUT") {
+        setStudent(initialState);
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, []);
 
   // Session heartbeat for anti-sharing
   useEffect(() => {
@@ -123,6 +244,7 @@ export function App() {
           {route.name === "admin" && <Gate student={student} requireAdmin><Admin courses={courseContent} updateCourses={setCourseContent} requests={lessonRequests} updateRequests={setLessonRequests} uploads={uploads} /></Gate>}
           {route.name === "login" && <Login student={student} updateStudent={handleUpdateStudent} />}
           {route.name === "redeem" && <Redeem courses={courseContent} student={student} updateStudent={handleUpdateStudent} />}
+          {route.name === "reset-password" && <ResetPassword recoveryReady={recoveryReady} />}
           {route.name === "terms" && <TermsOfService />}
           {route.name === "privacy" && <PrivacyPolicy />}
           {route.name === "notFound" && <NotFound />}

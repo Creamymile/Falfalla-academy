@@ -1,8 +1,9 @@
-import { KeyRound, AlertCircle, CheckCircle, Clock } from "lucide-react";
-import { useState } from "react";
+import { KeyRound, AlertCircle, CheckCircle, Clock, Loader } from "lucide-react";
+import { useEffect, useState } from "react";
 import { go } from "../router";
-import { AccessCode, CourseAccess, Course, StudentState } from "../types";
-import { redeemAccessCode, loadAccessCodes, saveAccessCodes, accessTimeRemaining, hasValidAccess } from "../services/access";
+import { CourseAccess, Course, StudentState } from "../types";
+import { accessTimeRemaining, hasValidAccess } from "../services/access";
+import { redeemCodeInDb, loadCourseAccess } from "../services/auth";
 
 export function Redeem({
   courses,
@@ -15,7 +16,18 @@ export function Redeem({
 }) {
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState<{ courseName: string; access: CourseAccess } | null>(null);
+
+  // Load fresh access data from DB on mount
+  useEffect(() => {
+    if (!student.isAuthenticated) return;
+    loadCourseAccess().then((access) => {
+      if (access.length > 0) {
+        updateStudent({ ...student, courseAccess: access });
+      }
+    });
+  }, []);
 
   if (!student.isAuthenticated) {
     return (
@@ -30,7 +42,7 @@ export function Redeem({
     );
   }
 
-  const handleRedeem = () => {
+  const handleRedeem = async () => {
     setError("");
     setSuccess(null);
 
@@ -39,39 +51,36 @@ export function Redeem({
       return;
     }
 
-    const codes = loadAccessCodes();
-    const result = redeemAccessCode(code, student, codes);
+    setLoading(true);
 
-    if (!result.ok) {
-      setError(result.error);
-      return;
+    try {
+      const result = await redeemCodeInDb(code);
+
+      if (!result.ok) {
+        setError(result.error);
+        return;
+      }
+
+      const newAccess = result.access;
+      const courseName = courses.find((c) => c.id === newAccess.courseId)?.title ?? "Course";
+
+      updateStudent({
+        ...student,
+        courseAccess: [...student.courseAccess.filter((a) => a.courseId !== newAccess.courseId), newAccess],
+        enrolledCourseIds: student.enrolledCourseIds.includes(newAccess.courseId)
+          ? student.enrolledCourseIds
+          : [...student.enrolledCourseIds, newAccess.courseId],
+      });
+
+      setSuccess({ courseName, access: newAccess });
+      setCode("");
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    // Find the code entry and mark it redeemed
-    const updatedCodes = codes.map((c) =>
-      c.code.replace(/-/g, "") === code.trim().toUpperCase().replace(/[\s-]/g, "")
-        ? { ...c, redeemedBy: student.email, redeemedAt: new Date().toISOString() }
-        : c,
-    );
-    saveAccessCodes(updatedCodes);
-
-    // Grant access + auto-enroll
-    const newAccess = result.access;
-    const courseName = courses.find((c) => c.id === newAccess.courseId)?.title ?? "Course";
-
-    updateStudent({
-      ...student,
-      courseAccess: [...student.courseAccess.filter((a) => a.courseId !== newAccess.courseId), newAccess],
-      enrolledCourseIds: student.enrolledCourseIds.includes(newAccess.courseId)
-        ? student.enrolledCourseIds
-        : [...student.enrolledCourseIds, newAccess.courseId],
-    });
-
-    setSuccess({ courseName, access: newAccess });
-    setCode("");
   };
 
-  // Show active accesses
   const activeAccesses = student.courseAccess.filter((a) => new Date(a.expiresAt) > new Date());
 
   return (
@@ -92,12 +101,13 @@ export function Redeem({
             placeholder="XXXX-XXXX-XXXX"
             maxLength={14}
             className="code-input"
-            onKeyDown={(e) => e.key === "Enter" && handleRedeem()}
+            onKeyDown={(e) => e.key === "Enter" && !loading && handleRedeem()}
             autoComplete="off"
             spellCheck={false}
+            disabled={loading}
           />
-          <button className="primary" onClick={handleRedeem}>
-            Redeem code
+          <button className="primary" onClick={handleRedeem} disabled={loading}>
+            {loading ? <Loader size={16} className="spin" /> : "Redeem code"}
           </button>
         </div>
 

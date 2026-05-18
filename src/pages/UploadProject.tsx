@@ -58,7 +58,7 @@ export function UploadProject({
           {success && <p className="success-message" role="alert">Upload added to the community gallery.</p>}
         </section>
         <aside className="preview-panel">
-          {imageUrl ? <img src={imageUrl} alt="" /> : <Camera size={44} />}
+          {imageUrl ? <img src={imageUrl} alt={title || "Latte art preview"} loading="lazy" /> : <Camera size={44} />}
           <h3>{title || "Project preview"}</h3>
           <p>{notes || "Your photo and practice notes will appear here before publishing."}</p>
         </aside>

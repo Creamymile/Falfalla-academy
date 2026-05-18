@@ -25,7 +25,10 @@ export function generateDeviceId(): string {
 
 // ── Session Token ───────────────────────────────────────────
 export function generateSessionToken(): string {
-  return `sess-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+  const hex = Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
+  return `sess-${hex}`;
 }
 
 // ── Access Code Storage ─────────────────────────────────────
@@ -44,13 +47,17 @@ export function saveAccessCodes(codes: AccessCode[]) {
 // ── Generate Access Codes (admin) ───────────────────────────
 export function generateAccessCode(courseId: string, durationDays: number = 7): AccessCode {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // no 0/O/I/1
+  const randomBytes = new Uint8Array(12);
+  crypto.getRandomValues(randomBytes);
   let code = "";
   for (let i = 0; i < 12; i++) {
     if (i > 0 && i % 4 === 0) code += "-";
-    code += chars[Math.floor(Math.random() * chars.length)];
+    code += chars[randomBytes[i] % chars.length];
   }
+  const idBytes = new Uint8Array(4);
+  crypto.getRandomValues(idBytes);
   return {
-    id: `ac-${Date.now()}-${Math.random().toString(36).slice(2, 6)}`,
+    id: `ac-${Date.now()}-${Array.from(idBytes, (b) => b.toString(36)).join("").slice(0, 6)}`,
     code,
     courseId,
     durationDays,

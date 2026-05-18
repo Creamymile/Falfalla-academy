@@ -4,7 +4,7 @@ export function GalleryCard({ upload, courses }: { upload: ProjectUpload; course
   const course = courses.find((c) => c.id === upload.courseId);
   return (
     <div className="gallery-card-inner">
-      <img src={upload.imageUrl} alt="" loading="lazy" />
+      <img src={upload.imageUrl} alt={upload.title || "Student latte art upload"} loading="lazy" />
       <div>
         <span className="badge">{upload.pattern}</span>
         {upload.featured && <span className="badge bestseller">Featured</span>}

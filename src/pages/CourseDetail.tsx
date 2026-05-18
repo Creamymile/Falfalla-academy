@@ -56,7 +56,7 @@ export function CourseDetail({
   return (
     <section className="page">
       <div className="detail-hero animate-fade-in">
-        <img src={course.thumbnailUrl} alt="" />
+        <img src={course.thumbnailUrl} alt={course.title} loading="lazy" />
         <div>
           <span className={`badge ${course.level}`}>{course.level}</span>
           <h1>{course.title}</h1>

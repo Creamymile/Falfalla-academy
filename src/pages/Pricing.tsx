@@ -33,12 +33,13 @@ export function Checkout() {
   return (
     <section className="gate checkout-page">
       <CreditCard size={42} />
-      <h1>Stripe-ready checkout</h1>
+      <h1>Checkout</h1>
       <p>
-        This mock checkout is ready for production integration. Later, Stripe will
-        create the payment session and unlock course access after payment succeeds.
+        Payment processing is being set up. In the meantime, please use an
+        access code to unlock your course. Contact support if you need help.
       </p>
-      <button className="primary" onClick={() => go({ name: "dashboard" })}>Continue to dashboard</button>
+      <button className="secondary" onClick={() => go({ name: "redeem" })}>Redeem access code</button>
+      <button className="primary" onClick={() => go({ name: "courses" })} style={{ marginTop: "0.75rem" }}>Browse courses</button>
     </section>
   );
 }

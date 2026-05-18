@@ -1,9 +1,10 @@
 import { KeyRound, LogIn, LogOut, Menu, X } from "lucide-react";
-import { useState } from "react";
-import { go, Route } from "../router";
+import { useEffect, useState } from "react";
+import { go, pathFor, Route } from "../router";
 import { initialState } from "../state";
 import { StudentState } from "../types";
 import { clearSession } from "../services/access";
+import { signOut as supabaseSignOut } from "../services/auth";
 
 export function Header({
   route,
@@ -16,23 +17,17 @@ export function Header({
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Close mobile menu on route change
+  useEffect(() => { setMenuOpen(false); }, [route]);
+
   const login = () => {
-    if (route.name === "admin") {
-      // Quick admin sign-in (dev convenience — will be removed in production)
-      updateStudent({
-        ...student,
-        isAuthenticated: true,
-        role: "admin",
-        name: "Admin",
-        email: "admin@falfalla-academy.com",
-      });
-    } else {
-      go({ name: "login" });
-    }
+    go({ name: "login" });
+    setMenuOpen(false);
   };
 
-  const logout = () => {
+  const logout = async () => {
     if (student.email) clearSession(student.email);
+    await supabaseSignOut();
     updateStudent(initialState);
     go({ name: "home" });
   };
@@ -44,31 +39,31 @@ export function Header({
 
   return (
     <header className="site-header">
-      <button className="brand" onClick={() => nav({ name: "home" })}>
+      <a className="brand" href={pathFor({ name: "home" })} onClick={(e) => { e.preventDefault(); nav({ name: "home" }); }}>
         <span className="brand-wordmark">Falfalla Academy</span>
         <small>Latte Art Mastery</small>
-      </button>
+      </a>
       <button className="hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
         {menuOpen ? <X size={22} /> : <Menu size={22} />}
       </button>
       <nav className={menuOpen ? "open" : ""} aria-label="Main navigation">
-        <button onClick={() => nav({ name: "courses" })} aria-current={route.name === "courses" ? "page" : undefined}>Courses</button>
-        <button onClick={() => nav({ name: "gallery" })} aria-current={route.name === "gallery" ? "page" : undefined}>Gallery</button>
-        <button onClick={() => nav({ name: "pricing" })} aria-current={route.name === "pricing" ? "page" : undefined}>Pricing</button>
+        <a href={pathFor({ name: "courses" })} onClick={(e) => { e.preventDefault(); nav({ name: "courses" }); }} aria-current={route.name === "courses" ? "page" : undefined}>Courses</a>
+        <a href={pathFor({ name: "gallery" })} onClick={(e) => { e.preventDefault(); nav({ name: "gallery" }); }} aria-current={route.name === "gallery" ? "page" : undefined}>Gallery</a>
+        <a href={pathFor({ name: "pricing" })} onClick={(e) => { e.preventDefault(); nav({ name: "pricing" }); }} aria-current={route.name === "pricing" ? "page" : undefined}>Pricing</a>
         {student.isAuthenticated && (
-          <button onClick={() => nav({ name: "dashboard" })} aria-current={route.name === "dashboard" ? "page" : undefined}>Dashboard</button>
+          <a href={pathFor({ name: "dashboard" })} onClick={(e) => { e.preventDefault(); nav({ name: "dashboard" }); }} aria-current={route.name === "dashboard" ? "page" : undefined}>Dashboard</a>
         )}
         {student.isAuthenticated && (
-          <button onClick={() => nav({ name: "upload" })} aria-current={route.name === "upload" ? "page" : undefined}>Upload</button>
+          <a href={pathFor({ name: "upload" })} onClick={(e) => { e.preventDefault(); nav({ name: "upload" }); }} aria-current={route.name === "upload" ? "page" : undefined}>Upload</a>
         )}
         {student.isAuthenticated && (
-          <button onClick={() => nav({ name: "redeem" })} aria-current={route.name === "redeem" ? "page" : undefined}><KeyRound size={15} /> Redeem</button>
+          <a href={pathFor({ name: "redeem" })} onClick={(e) => { e.preventDefault(); nav({ name: "redeem" }); }} aria-current={route.name === "redeem" ? "page" : undefined}><KeyRound size={15} /> Redeem</a>
         )}
         {student.isAuthenticated && (
-          <button onClick={() => nav({ name: "profile" })} aria-current={route.name === "profile" ? "page" : undefined}>Profile</button>
+          <a href={pathFor({ name: "profile" })} onClick={(e) => { e.preventDefault(); nav({ name: "profile" }); }} aria-current={route.name === "profile" ? "page" : undefined}>Profile</a>
         )}
         {student.isAuthenticated && student.role === "admin" && (
-          <button onClick={() => nav({ name: "admin" })} aria-current={route.name === "admin" ? "page" : undefined}>Admin</button>
+          <a href={pathFor({ name: "admin" })} onClick={(e) => { e.preventDefault(); nav({ name: "admin" }); }} aria-current={route.name === "admin" ? "page" : undefined}>Admin</a>
         )}
       </nav>
       {student.isAuthenticated ? (
@@ -77,7 +72,7 @@ export function Header({
         </button>
       ) : (
         <button className="primary small" onClick={login}>
-          <LogIn size={17} /> {route.name === "admin" ? "Admin sign in" : "Sign in"}
+          <LogIn size={17} /> Sign in
         </button>
       )}
     </header>

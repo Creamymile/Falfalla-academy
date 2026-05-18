@@ -24,7 +24,7 @@ export function CourseCard({
 
   return (
     <article className="course-card">
-      <img src={course.thumbnailUrl} alt="" loading="lazy" />
+      <img src={course.thumbnailUrl} alt={course.title} loading="lazy" />
       <div>
         <div className="badge-row">
           <span className={`badge ${course.level}`}>{course.level}</span>

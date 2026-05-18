@@ -29,8 +29,11 @@ export function Gate({
     <section className="gate">
       <Lock size={36} />
       <h1>Sign in to continue learning</h1>
-      <p>Course catalog, lesson playback, progress, and admin previews are gated.</p>
-      <button className="primary" onClick={() => go({ name: "home" })}>Back to home</button>
+      <p>You need to be signed in to access this page.</p>
+      <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", justifyContent: "center" }}>
+        <button className="primary" onClick={() => go({ name: "login" })}>Sign in</button>
+        <button className="secondary" onClick={() => go({ name: "home" })}>Back to home</button>
+      </div>
     </section>
   );
 }
