@@ -136,28 +136,33 @@ export async function signOut(): Promise<void> {
 
 // ── Get Current Session ─────────────────────────────────────
 export async function getCurrentUser(): Promise<AuthResult> {
-  const { data: { user }, error } = await supabase.auth.getUser();
+  try {
+    const { data: { user }, error } = await supabase.auth.getUser();
 
-  if (error || !user) {
-    return { ok: false, error: "Not authenticated" };
+    if (error || !user) {
+      return { ok: false, error: "Not authenticated" };
+    }
+
+    const { data: profile } = await supabase
+      .from("profiles")
+      .select("name, role, device_id")
+      .eq("id", user.id)
+      .single();
+
+    return {
+      ok: true,
+      student: {
+        isAuthenticated: true,
+        role: (profile?.role as "student" | "admin") ?? "student",
+        name: profile?.name ?? user.user_metadata?.name ?? "",
+        email: user.email ?? "",
+        deviceId: profile?.device_id ?? "",
+      },
+    };
+  } catch (err) {
+    console.warn("getCurrentUser failed:", err);
+    return { ok: false, error: "Connection failed" };
   }
-
-  const { data: profile, error: profileError } = await supabase
-    .from("profiles")
-    .select("name, role, device_id")
-    .eq("id", user.id)
-    .single();
-
-  return {
-    ok: true,
-    student: {
-      isAuthenticated: true,
-      role: (profile?.role as "student" | "admin") ?? "student",
-      name: profile?.name ?? user.user_metadata?.name ?? "",
-      email: user.email ?? "",
-      deviceId: profile?.device_id ?? "",
-    },
-  };
 }
 
 // ── Load Course Access from DB ──────────────────────────────

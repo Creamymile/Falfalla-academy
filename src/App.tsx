@@ -123,54 +123,51 @@ export function App() {
     let isRecoveryRedirect = false;
 
     async function init() {
-      // ── 1. Detect PKCE recovery code in the URL ──
-      // Supabase PKCE adds ?code=xxx to the redirect URL.
-      // We must exchange it for a session BEFORE anything else.
-      const params = new URLSearchParams(window.location.search);
-      const code = params.get("code");
+      try {
+        // ── 1. Detect PKCE recovery code in the URL ──
+        const params = new URLSearchParams(window.location.search);
+        const code = params.get("code");
 
-      if (code) {
-        try {
-          const { data, error } = await supabase.auth.exchangeCodeForSession(code);
-          if (!error && data.session) {
-            // Check if this is a recovery flow
-            // The session user will have aal1 and the event won't tell us,
-            // so we check the URL for type=recovery or just treat code exchanges
-            // that land on the root as potential recovery.
-            isRecoveryRedirect = true;
-            setRecoveryReady(true);
-            window.location.hash = "#/reset-password";
-            // Clean the URL so the code isn't reused on refresh
-            window.history.replaceState({}, "", window.location.pathname + window.location.hash);
-            return; // Skip normal session restore — we're in recovery mode
+        if (code) {
+          try {
+            const { data, error } = await supabase.auth.exchangeCodeForSession(code);
+            if (!error && data.session) {
+              isRecoveryRedirect = true;
+              setRecoveryReady(true);
+              window.location.hash = "#/reset-password";
+              window.history.replaceState({}, "", window.location.pathname + window.location.hash);
+              return;
+            }
+          } catch {
+            // Code exchange failed — fall through to normal init
           }
-        } catch {
-          // Code exchange failed — fall through to normal init
+          window.history.replaceState({}, "", window.location.pathname + window.location.hash);
         }
-        // Clean the code from the URL even on failure
-        window.history.replaceState({}, "", window.location.pathname + window.location.hash);
-      }
 
-      // ── 2. Also detect implicit-flow recovery tokens in the hash ──
-      const hashStr = window.location.hash.replace(/^#/, "");
-      if (hashStr.includes("access_token=") && hashStr.includes("type=recovery")) {
-        isRecoveryRedirect = true;
-        // Supabase client auto-detects these; just wait for the event
-      }
+        // ── 2. Also detect implicit-flow recovery tokens in the hash ──
+        const hashStr = window.location.hash.replace(/^#/, "");
+        if (hashStr.includes("access_token=") && hashStr.includes("type=recovery")) {
+          isRecoveryRedirect = true;
+        }
 
-      // ── 3. Normal session restore ──
-      const result = await getCurrentUser();
-      if (result.ok && result.student) {
-        const access = await loadCourseAccess();
-        setStudent((prev) => ({
-          ...prev,
-          ...result.student,
-          courseAccess: access.length > 0 ? access : prev.courseAccess,
-        }));
+        // ── 3. Normal session restore ──
+        const result = await getCurrentUser();
+        if (result.ok && result.student) {
+          const access = await loadCourseAccess();
+          setStudent((prev) => ({
+            ...prev,
+            ...result.student,
+            courseAccess: access.length > 0 ? access : prev.courseAccess,
+          }));
+        }
+      } catch (err) {
+        console.warn("Init failed, continuing without auth:", err);
       }
     }
 
-    init().finally(() => setAppReady(true));
+    // Timeout: if init takes longer than 5s, load the app anyway
+    const timeout = setTimeout(() => setAppReady(true), 5000);
+    init().finally(() => { clearTimeout(timeout); setAppReady(true); });
 
     // Listen for auth state changes (e.g. email confirmation redirect)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
