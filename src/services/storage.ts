@@ -65,28 +65,30 @@ async function uploadFile(
   file: File,
   onProgress?: (pct: number) => void,
 ): Promise<{ ok: true; url: string } | { ok: false; error: string }> {
-  // Start progress
-  onProgress?.(10);
+  try {
+    onProgress?.(10);
 
-  const { error } = await supabase.storage
-    .from(bucket)
-    .upload(path, file, {
-      cacheControl: "3600",
-      upsert: true, // Overwrite if exists (e.g. re-uploading a video)
-    });
+    const { error } = await supabase.storage
+      .from(bucket)
+      .upload(path, file, {
+        cacheControl: "3600",
+        upsert: true,
+      });
 
-  if (error) {
-    return { ok: false, error: error.message };
+    if (error) {
+      return { ok: false, error: error.message };
+    }
+
+    onProgress?.(90);
+
+    const { data } = supabase.storage.from(bucket).getPublicUrl(path);
+
+    onProgress?.(100);
+
+    return { ok: true, url: data.publicUrl };
+  } catch (err: any) {
+    return { ok: false, error: err?.message ?? "Upload failed" };
   }
-
-  onProgress?.(90);
-
-  // Get public URL
-  const { data } = supabase.storage.from(bucket).getPublicUrl(path);
-
-  onProgress?.(100);
-
-  return { ok: true, url: data.publicUrl };
 }
 
 // ── Delete Helper ──────────────────────────────────────────

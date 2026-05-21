@@ -37,23 +37,32 @@ export function UploadProject({
     setUploading(true);
     setError("");
 
-    // Upload to Supabase Storage
-    const userId = student.email.replace(/[^a-zA-Z0-9]/g, "_");
-    const result = await uploadGalleryImage(userId, selectedFile);
+    try {
+      // Upload to Supabase Storage
+      const userId = student.email.replace(/[^a-zA-Z0-9]/g, "_");
+      const result = await uploadGalleryImage(userId, selectedFile);
 
-    if (!result.ok) {
-      setError(result.error);
+      let finalImageUrl: string;
+      if (!result.ok) {
+        // Supabase Storage failed — use local object URL as fallback
+        console.warn("Storage upload failed, using local preview:", result.error);
+        finalImageUrl = URL.createObjectURL(selectedFile);
+      } else {
+        finalImageUrl = result.url;
+      }
+
+      const today = new Date().toISOString().slice(0, 10);
+      updateUploads([
+        { id: `upload-${Date.now()}`, user: student.name, title: title.trim(), pattern, courseId, imageUrl: finalImageUrl, notes, likes: 0, createdAt: today, comments: [] },
+        ...uploads,
+      ]);
+      setTitle(""); setNotes(""); setImageUrl(""); setPreviewUrl(""); setSelectedFile(null); setSuccess(true);
+    } catch (err) {
+      console.error("Upload error:", err);
+      setError("Upload failed. Please try again.");
+    } finally {
       setUploading(false);
-      return;
     }
-
-    const today = new Date().toISOString().slice(0, 10);
-    updateUploads([
-      { id: `upload-${Date.now()}`, user: student.name, title: title.trim(), pattern, courseId, imageUrl: result.url, notes, likes: 0, createdAt: today, comments: [] },
-      ...uploads,
-    ]);
-    setTitle(""); setNotes(""); setImageUrl(""); setPreviewUrl(""); setSelectedFile(null); setSuccess(true);
-    setUploading(false);
   };
 
   return (
