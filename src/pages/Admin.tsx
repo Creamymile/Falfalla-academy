@@ -10,6 +10,7 @@ import { makeSlug, supportedLanguages } from "../constants";
 import { Stat } from "../components/Shared";
 import { courses as seedCourses } from "../data/courses";
 import { createAccessCodeInDb, loadAccessCodesFromDb, toggleAccessCodeInDb } from "../services/auth";
+import { uploadVideo, uploadResource, uploadSubtitle } from "../services/storage";
 
 type Tab = "overview" | "courses" | "students" | "codes" | "requests";
 
@@ -39,6 +40,10 @@ export function Admin({
   const [newCodeDays, setNewCodeDays] = useState(7);
   const [copiedCodeId, setCopiedCodeId] = useState("");
   const [codeLoading, setCodeLoading] = useState(false);
+  const [uploadingVideo, setUploadingVideo] = useState(false);
+  const [uploadingResource, setUploadingResource] = useState("");
+  const [uploadingSubtitle, setUploadingSubtitle] = useState("");
+  const [uploadMessage, setUploadMessage] = useState("");
 
   useEffect(() => {
     loadAccessCodesFromDb().then(setAccessCodes);
@@ -131,16 +136,32 @@ export function Admin({
     });
   };
 
-  const handleVideoUpload = (file?: File) => {
+  const handleVideoUpload = async (file?: File) => {
     if (!file || !selectedCourse || !selectedLesson) return;
-    patchLesson(selectedCourse.id, selectedLesson.id, { videoUrl: URL.createObjectURL(file) });
+    setUploadingVideo(true);
+    setUploadMessage("");
+    const result = await uploadVideo(selectedCourse.id, selectedLesson.id, file);
+    if (result.ok) {
+      patchLesson(selectedCourse.id, selectedLesson.id, { videoUrl: result.url });
+      setUploadMessage("Video uploaded successfully.");
+    } else {
+      setUploadMessage(`Video upload failed: ${result.error}`);
+    }
+    setUploadingVideo(false);
   };
 
-  const handleResourceUpload = (resourceId: string, file?: File) => {
+  const handleResourceUpload = async (resourceId: string, file?: File) => {
     if (!file || !selectedCourse || !selectedLesson) return;
-    patchLesson(selectedCourse.id, selectedLesson.id, {
-      resources: selectedLesson.resources.map((r) => (r.id === resourceId ? { ...r, title: file.name, url: URL.createObjectURL(file) } : r)),
-    });
+    setUploadingResource(resourceId);
+    const result = await uploadResource(selectedCourse.id, selectedLesson.id, resourceId, file);
+    if (result.ok) {
+      patchLesson(selectedCourse.id, selectedLesson.id, {
+        resources: selectedLesson.resources.map((r) => (r.id === resourceId ? { ...r, title: file.name, url: result.url } : r)),
+      });
+    } else {
+      setUploadMessage(`Resource upload failed: ${result.error}`);
+    }
+    setUploadingResource("");
   };
 
   const addSubtitle = () => {
@@ -150,11 +171,18 @@ export function Admin({
     });
   };
 
-  const handleSubtitleUpload = (subtitleId: string, file?: File) => {
+  const handleSubtitleUpload = async (subtitleId: string, file?: File) => {
     if (!file || !selectedCourse || !selectedLesson) return;
-    patchLesson(selectedCourse.id, selectedLesson.id, {
-      subtitles: selectedLesson.subtitles.map((s) => (s.id === subtitleId ? { ...s, src: URL.createObjectURL(file) } : s)),
-    });
+    setUploadingSubtitle(subtitleId);
+    const result = await uploadSubtitle(selectedCourse.id, selectedLesson.id, subtitleId, file);
+    if (result.ok) {
+      patchLesson(selectedCourse.id, selectedLesson.id, {
+        subtitles: selectedLesson.subtitles.map((s) => (s.id === subtitleId ? { ...s, src: result.url } : s)),
+      });
+    } else {
+      setUploadMessage(`Subtitle upload failed: ${result.error}`);
+    }
+    setUploadingSubtitle("");
   };
 
   const deleteResource = (resourceId: string) => {
@@ -397,9 +425,14 @@ export function Admin({
                 <label>Assessment<textarea value={selectedLesson.assessment} onChange={(e) => patchLesson(selectedCourse.id, selectedLesson.id, { assessment: e.target.value })} /></label>
 
                 <div className="upload-box">
-                  <Upload size={18} /><span>Upload lesson video</span>
-                  <input type="file" accept="video/*" onChange={(e) => handleVideoUpload(e.target.files?.[0])} />
+                  {uploadingVideo ? (
+                    <><Loader size={18} className="spin" /><span>Uploading video...</span></>
+                  ) : (
+                    <><Upload size={18} /><span>Upload lesson video</span>
+                    <input type="file" accept="video/*" onChange={(e) => handleVideoUpload(e.target.files?.[0])} /></>
+                  )}
                 </div>
+                {uploadMessage && <p className="admin-message" role="status">{uploadMessage}</p>}
 
                 {/* Subtitles */}
                 <div className="resource-editor">

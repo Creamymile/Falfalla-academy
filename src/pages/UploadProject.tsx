@@ -1,6 +1,7 @@
-import { Camera, Upload } from "lucide-react";
+import { Camera, Loader, Upload } from "lucide-react";
 import { useState } from "react";
 import { Course, ProjectUpload, StudentState } from "../types";
+import { uploadGalleryImage } from "../services/storage";
 
 export function UploadProject({
   courses,
@@ -18,15 +19,41 @@ export function UploadProject({
   const [courseId, setCourseId] = useState(courses[0]?.id ?? "");
   const [notes, setNotes] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [previewUrl, setPreviewUrl] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
 
-  const upload = () => {
-    if (!title.trim() || !imageUrl) return;
+  const handleFileSelect = (file?: File) => {
+    if (!file) return;
+    setSelectedFile(file);
+    setPreviewUrl(URL.createObjectURL(file));
+    setError("");
+  };
+
+  const upload = async () => {
+    if (!title.trim() || !selectedFile) return;
+    setUploading(true);
+    setError("");
+
+    // Upload to Supabase Storage
+    const userId = student.email.replace(/[^a-zA-Z0-9]/g, "_");
+    const result = await uploadGalleryImage(userId, selectedFile);
+
+    if (!result.ok) {
+      setError(result.error);
+      setUploading(false);
+      return;
+    }
+
+    const today = new Date().toISOString().slice(0, 10);
     updateUploads([
-      { id: `upload-${uploads.length + 1}`, user: student.name, title: title.trim(), pattern, courseId, imageUrl, notes, likes: 0, createdAt: "Today", comments: [] },
+      { id: `upload-${Date.now()}`, user: student.name, title: title.trim(), pattern, courseId, imageUrl: result.url, notes, likes: 0, createdAt: today, comments: [] },
       ...uploads,
     ]);
-    setTitle(""); setNotes(""); setImageUrl(""); setSuccess(true);
+    setTitle(""); setNotes(""); setImageUrl(""); setPreviewUrl(""); setSelectedFile(null); setSuccess(true);
+    setUploading(false);
   };
 
   return (
@@ -52,13 +79,16 @@ export function UploadProject({
           <label>Practice notes<textarea value={notes} onChange={(e) => setNotes(e.target.value)} /></label>
           <label className="upload-box">
             <Upload size={18} /> Choose latte art image
-            <input type="file" accept="image/*" onChange={(e) => { const f = e.target.files?.[0]; if (f) setImageUrl(URL.createObjectURL(f)); }} />
+            <input type="file" accept="image/*" onChange={(e) => handleFileSelect(e.target.files?.[0])} />
           </label>
-          <button className="primary" onClick={upload}>Publish to gallery</button>
+          <button className="primary" onClick={upload} disabled={uploading || !selectedFile || !title.trim()}>
+            {uploading ? <><Loader size={16} className="spin" /> Uploading...</> : "Publish to gallery"}
+          </button>
           {success && <p className="success-message" role="alert">Upload added to the community gallery.</p>}
+          {error && <p className="login-error" role="alert">{error}</p>}
         </section>
         <aside className="preview-panel">
-          {imageUrl ? <img src={imageUrl} alt={title || "Latte art preview"} loading="lazy" /> : <Camera size={44} />}
+          {previewUrl ? <img src={previewUrl} alt={title || "Latte art preview"} loading="lazy" /> : <Camera size={44} />}
           <h3>{title || "Project preview"}</h3>
           <p>{notes || "Your photo and practice notes will appear here before publishing."}</p>
         </aside>
