@@ -6,7 +6,7 @@ export const COURSE_IDS = [
   "latte-art-advanced",
 ];
 
-export const CONTENT_KEY = "falfalla-academy-content-v1";
+export const CONTENT_KEY = "falfalla-academy-content-v2";
 export const REQUESTS_KEY = "falfalla-academy-lesson-requests";
 export const UPLOADS_KEY = "falfalla-academy-gallery-uploads";
 
@@ -28,35 +28,7 @@ export const badges: Badge[] = [
   { id: "completion-certificate", title: "Completion Certificate", description: "Complete every lesson in an enrolled course.", requirement: "Finish a course" },
 ];
 
-export const starterUploads: ProjectUpload[] = [
-  {
-    id: "upload-1",
-    user: "Maya R.",
-    title: "First balanced heart",
-    pattern: "Heart",
-    courseId: "latte-art-fundamentals",
-    imageUrl: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?auto=format&fit=crop&w=900&q=85",
-    notes: "Working on cleaner contrast and a narrower finish line.",
-    likes: 42,
-    createdAt: "2026-04-24",
-    featured: true,
-    comments: [
-      { id: "comment-1", author: "Falfalla Academy", comment: "Great center placement. Try starting the finish a little higher.", createdAt: "2026-04-24" },
-    ],
-  },
-  {
-    id: "upload-2",
-    user: "Ari S.",
-    title: "Rosetta practice",
-    pattern: "Rosetta",
-    courseId: "latte-art-advanced",
-    imageUrl: "https://images.unsplash.com/photo-1513267048331-5611cad62e41?auto=format&fit=crop&w=900&q=85",
-    notes: "Leaves are improving, still practicing stem clarity.",
-    likes: 31,
-    createdAt: "2026-04-28",
-    comments: [],
-  },
-];
+export const starterUploads: ProjectUpload[] = [];
 
 export function getEarnedBadges(
   courses: { id: string; modules: { lessons: { id: string }[] }[] }[],
@@ -88,6 +60,7 @@ export function ratingSummary(course: { reviews: { rating: number }[] }) {
 
 export function isBestSeller(course: { enrollmentCount?: number }, courses: { enrollmentCount?: number }[]) {
   const max = Math.max(...courses.map((c) => c.enrollmentCount ?? 0));
+  if (max === 0) return false; // No best seller when no enrollments yet
   return (course.enrollmentCount ?? 0) === max;
 }
 

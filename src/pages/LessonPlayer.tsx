@@ -195,12 +195,20 @@ export function LessonPlayer({
 
       <div className="player-pane">
         <div className="video-shell">
-          <video ref={videoRef} controls poster={course.thumbnailUrl} onEnded={markComplete} onTimeUpdate={handleTimeUpdate} onLoadedMetadata={handleLoadedMetadata} onPause={savePosition}>
-            <source src={lesson.videoUrl} type="video/mp4" />
-            {lesson.subtitles.filter((t) => t.src && t.src !== "#").map((t) => (
-              <track key={t.id} src={t.src} kind="subtitles" srcLang={t.language} label={t.label} default={t.language === captionLanguage} />
-            ))}
-          </video>
+          {lesson.videoUrl ? (
+            <video ref={videoRef} controls poster={course.thumbnailUrl} onEnded={markComplete} onTimeUpdate={handleTimeUpdate} onLoadedMetadata={handleLoadedMetadata} onPause={savePosition}>
+              <source src={lesson.videoUrl} type="video/mp4" />
+              {lesson.subtitles.filter((t) => t.src && t.src !== "#").map((t) => (
+                <track key={t.id} src={t.src} kind="subtitles" srcLang={t.language} label={t.label} default={t.language === captionLanguage} />
+              ))}
+            </video>
+          ) : (
+            <div className="video-empty">
+              <Play size={40} />
+              <h3>Video coming soon</h3>
+              <p>This lesson's video is being prepared. Check back soon or read the lesson content below.</p>
+            </div>
+          )}
           <div className="speed-controls">
             {[0.5, 1, 1.5, 2].map((s) => (
               <button key={s} className={playbackSpeed === s ? "active" : ""} onClick={() => changeSpeed(s)}>{s}x</button>

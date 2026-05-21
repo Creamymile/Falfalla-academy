@@ -44,14 +44,8 @@ export function Admin({
     loadAccessCodesFromDb().then(setAccessCodes);
   }, []);
 
-  const mockStudents = [
-    { name: "Maya R.", email: "maya@example.com", enrolled: ["Barista Foundations", "Latte Art Fundamentals"], watchHours: 12.4, lastActive: "2026-05-06", joinDate: "2026-04-10" },
-    { name: "Ari S.", email: "ari@example.com", enrolled: ["Latte Art Fundamentals", "Latte Art Advanced"], watchHours: 18.7, lastActive: "2026-05-07", joinDate: "2026-04-15" },
-    { name: "Daniel K.", email: "daniel@example.com", enrolled: ["Barista Foundations"], watchHours: 4.2, lastActive: "2026-05-03", joinDate: "2026-04-20" },
-    { name: "Lina P.", email: "lina@example.com", enrolled: ["Latte Art Fundamentals"], watchHours: 8.9, lastActive: "2026-05-05", joinDate: "2026-04-22" },
-    { name: "Priya M.", email: "priya@example.com", enrolled: ["Coffee Sensory & Tasting", "Brewing Methods"], watchHours: 6.1, lastActive: "2026-05-07", joinDate: "2026-04-28" },
-    { name: "Noah T.", email: "noah@example.com", enrolled: ["Latte Art Advanced"], watchHours: 15.3, lastActive: "2026-05-06", joinDate: "2026-04-12" },
-  ];
+  const mockStudents: { name: string; email: string; enrolled: string[]; watchHours: number; lastActive: string; joinDate: string }[] = [];
+  // Students will come from Supabase profiles table in a future update
 
   const selectedLesson =
     selectedCourse && flattenLessons(selectedCourse).find((l) => l.id === selectedLessonId)
@@ -68,7 +62,7 @@ export function Admin({
   const totals = useMemo(() => ({
     courses: courses.length,
     lessons: courses.reduce((t, c) => t + courseLessonCount(c), 0),
-    students: Math.max(128, courses.reduce((s, c) => s + c.enrollmentCount, 0)),
+    students: courses.reduce((s, c) => s + c.enrollmentCount, 0),
     uploads: uploads.length,
   }), [courses, uploads]);
 
@@ -110,7 +104,7 @@ export function Admin({
     const newLesson = {
       id: `lesson-${Date.now()}`, title: "New Latte Art Lesson", description: "Add the lesson summary.",
       theory: "Add SCA-aligned theory.", practice: ["Add a practical drill."], assessment: "Add a completion target.",
-      duration: 600, videoUrl: "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",
+      duration: 600, videoUrl: "",
       subtitles: [{ id: `subtitle-${Date.now()}`, language: "en", label: "English", src: "#", isDefault: true }],
       resources: [],
     };
@@ -280,9 +274,9 @@ export function Admin({
           </div>
 
           <section className="editor-panel">
-            <h2>Revenue &amp; activity</h2>
+            <h2>Activity</h2>
             <div className="analytics-grid">
-              <Stat icon={<CreditCard />} label="Projected revenue" value="$8.4k" />
+              <Stat icon={<KeyRound />} label="Codes redeemed" value={accessCodes.filter((c) => c.redeemedBy).length} />
               <Stat icon={<Image />} label="Project uploads" value={totals.uploads} />
               <Stat icon={<MessageCircle />} label="Requests" value={requests.length} />
             </div>

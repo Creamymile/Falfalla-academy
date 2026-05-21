@@ -119,18 +119,21 @@ export function Home({
           </p>
         </div>
         <div className="testimonial-stack">
-          <article className="review-card">
-            <StarIcon /> <strong>5.0</strong>
-            <h3>Structured like a real barista school</h3>
-            <p>Clear, progressive, and practical for people starting from zero.</p>
-            <small>Maya R.</small>
-          </article>
-          <article className="review-card">
-            <StarIcon /> <strong>4.8</strong>
-            <h3>Perfect for latte art practice</h3>
-            <p>The upload and request workflow makes it easy to ask what to learn next.</p>
-            <small>Ari S.</small>
-          </article>
+          {courses.flatMap((c) => c.reviews).slice(0, 2).map((r) => (
+            <article className="review-card" key={r.id}>
+              <StarIcon /> <strong>{r.rating}.0</strong>
+              <h3>{r.title}</h3>
+              <p>{r.comment}</p>
+              <small>{r.author}</small>
+            </article>
+          ))}
+          {courses.flatMap((c) => c.reviews).length === 0 && (
+            <article className="review-card">
+              <StarIcon /> <strong>New</strong>
+              <h3>Be the first to review</h3>
+              <p>Enroll in a course and share your experience with the community.</p>
+            </article>
+          )}
         </div>
       </section>
 

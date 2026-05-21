@@ -1,6 +1,6 @@
 import { Course, Lesson } from "../types";
 
-const sampleVideo = "https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4";
+const sampleVideo = ""; // Upload your video via Admin → Courses → select lesson → Upload video
 
 const captionPack = [
   {
@@ -85,27 +85,8 @@ export const courses: Course[] = [
       "Cleaning cloths (3 separate)",
       "Knock box",
     ],
-    enrollmentCount: 428,
-    reviews: [
-      {
-        id: "review-foundation-1",
-        author: "Maya R.",
-        rating: 5,
-        title: "Best starting point",
-        comment:
-          "I had no barista experience and this made espresso workflow feel clear instead of intimidating.",
-        createdAt: "2026-04-18",
-      },
-      {
-        id: "review-foundation-2",
-        author: "Daniel K.",
-        rating: 5,
-        title: "Very practical",
-        comment:
-          "The cleaning, safety, and espresso recipe sections are exactly what a beginner needs before latte art.",
-        createdAt: "2026-04-24",
-      },
-    ],
+    enrollmentCount: 0,
+    reviews: [],
     modules: [
       {
         id: "coffee-basics",
@@ -281,27 +262,8 @@ export const courses: Course[] = [
       "Digital scale",
       "Phone or camera for video review",
     ],
-    enrollmentCount: 612,
-    reviews: [
-      {
-        id: "review-fundamentals-1",
-        author: "Ari S.",
-        rating: 5,
-        title: "The milk texture lesson helped most",
-        comment:
-          "I finally understood why my foam was separating and how to fix it before pouring.",
-        createdAt: "2026-04-21",
-      },
-      {
-        id: "review-fundamentals-2",
-        author: "Lina P.",
-        rating: 4,
-        title: "Clear practice drills",
-        comment:
-          "The heart and tulip scorecards make practice feel structured, not random.",
-        createdAt: "2026-04-28",
-      },
-    ],
+    enrollmentCount: 0,
+    reviews: [],
     modules: [
       {
         id: "milk-texture-foundation",
@@ -415,18 +377,8 @@ export const courses: Course[] = [
       "Phone/camera with slow-motion capability",
       "Scoring rubric printouts",
     ],
-    enrollmentCount: 289,
-    reviews: [
-      {
-        id: "review-advanced-1",
-        author: "Noah T.",
-        rating: 5,
-        title: "Great for free pour goals",
-        comment:
-          "The ripple control and video review approach made rosetta practice much more measurable.",
-        createdAt: "2026-04-26",
-      },
-    ],
+    enrollmentCount: 0,
+    reviews: [],
     modules: [
       {
         id: "free-pour-technique",
@@ -541,17 +493,8 @@ export const courses: Course[] = [
       "Flavor wheel reference chart",
       "Sensory reference kit (optional)",
     ],
-    enrollmentCount: 195,
-    reviews: [
-      {
-        id: "review-sensory-1",
-        author: "Priya M.",
-        rating: 5,
-        title: "Game changer for my palate",
-        comment: "The triangulation exercises trained my taste buds faster than years of casual cupping.",
-        createdAt: "2026-04-30",
-      },
-    ],
+    enrollmentCount: 0,
+    reviews: [],
     modules: [
       {
         id: "sensory-foundations",
@@ -589,17 +532,8 @@ export const courses: Course[] = [
       "Menu costing template",
       "Point of sale system (for reference)",
     ],
-    enrollmentCount: 142,
-    reviews: [
-      {
-        id: "review-business-1",
-        author: "Sam K.",
-        rating: 5,
-        title: "Saved me from costly mistakes",
-        comment: "The costing module alone justified the course. I was underpricing my menu by 30%.",
-        createdAt: "2026-05-01",
-      },
-    ],
+    enrollmentCount: 0,
+    reviews: [],
     modules: [
       {
         id: "cafe-operations",
@@ -643,17 +577,8 @@ export const courses: Course[] = [
       "Timer",
       "Refractometer (optional)",
     ],
-    enrollmentCount: 234,
-    reviews: [
-      {
-        id: "review-brewing-1",
-        author: "Kai L.",
-        rating: 5,
-        title: "Finally understand extraction",
-        comment: "The brewing control chart lesson connected theory to my daily V60 routine perfectly.",
-        createdAt: "2026-04-29",
-      },
-    ],
+    enrollmentCount: 0,
+    reviews: [],
     modules: [
       {
         id: "extraction-theory",
@@ -696,17 +621,8 @@ export const courses: Course[] = [
       "Grinder brush and vacuum",
       "Food-safe lubricant",
     ],
-    enrollmentCount: 178,
-    reviews: [
-      {
-        id: "review-equipment-1",
-        author: "Jess W.",
-        rating: 5,
-        title: "Essential knowledge",
-        comment: "Our shots improved immediately after implementing the daily flush routine from this course.",
-        createdAt: "2026-05-02",
-      },
-    ],
+    enrollmentCount: 0,
+    reviews: [],
     modules: [
       {
         id: "daily-maintenance",

@@ -24,6 +24,7 @@ import { Redeem } from "./pages/Redeem";
 import { ResetPassword } from "./pages/ResetPassword";
 import { TermsOfService, PrivacyPolicy } from "./pages/Legal";
 import { Footer } from "./components/Footer";
+import { PageLoader } from "./components/PageLoader";
 import { clearSession, startSessionHeartbeat } from "./services/access";
 import { getCurrentUser, loadCourseAccess, signOut as supabaseSignOut } from "./services/auth";
 import { supabase } from "./lib/supabase";
@@ -61,12 +62,17 @@ export function App() {
   const [lessonRequests, setLessonRequests] = useState<LessonRequest[]>(loadRequests);
   const [uploads, setUploads] = useState<ProjectUpload[]>(loadUploads);
   const [celebration, setCelebration] = useState<string | null>(null);
+  const [pageLoading, setPageLoading] = useState(false);
+  const [appReady, setAppReady] = useState(false);
   const prevCompletedRef = useRef(student.completedLessonIds.length);
 
   useEffect(() => {
     const sync = () => {
+      setPageLoading(true);
       setRoute(routeFromHash());
       window.scrollTo({ top: 0 });
+      // Brief loading to allow render
+      setTimeout(() => setPageLoading(false), 150);
     };
     window.addEventListener("hashchange", sync);
     return () => window.removeEventListener("hashchange", sync);
@@ -164,7 +170,7 @@ export function App() {
       }
     }
 
-    init();
+    init().finally(() => setAppReady(true));
 
     // Listen for auth state changes (e.g. email confirmation redirect)
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
@@ -225,11 +231,24 @@ export function App() {
     setStudent(s);
   };
 
+  // App splash screen while restoring session
+  if (!appReady) {
+    return (
+      <div className="app-splash">
+        <div className="splash-content">
+          <h1 className="brand-wordmark">Falfalla Academy</h1>
+          <div className="splash-spinner" />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <ErrorBoundary>
       <div className="app">
+        <PageLoader loading={pageLoading} />
         <Header route={route} student={student} updateStudent={handleUpdateStudent} />
-        <main id="main-content">
+        <main id="main-content" className={pageLoading ? "page-transitioning" : ""}>
           {route.name === "home" && <Home courses={courseContent} student={student} updateStudent={handleUpdateStudent} />}
           {route.name === "courses" && <Courses courses={courseContent} student={student} updateStudent={handleUpdateStudent} />}
           {route.name === "dashboard" && <Gate student={student}><Dashboard courses={courseContent} student={student} uploads={uploads} /></Gate>}
