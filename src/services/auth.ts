@@ -131,7 +131,11 @@ export async function updatePassword(newPassword: string): Promise<{ ok: boolean
 
 // ── Sign Out ────────────────────────────────────────────────
 export async function signOut(): Promise<void> {
-  await supabase.auth.signOut();
+  try {
+    await supabase.auth.signOut();
+  } catch (err) {
+    console.warn("Supabase signOut failed:", err);
+  }
 }
 
 // ── Get Current Session ─────────────────────────────────────
