@@ -27,7 +27,7 @@ import { Footer } from "./components/Footer";
 import { PageLoader } from "./components/PageLoader";
 import { clearSession, startSessionHeartbeat } from "./services/access";
 import { getCurrentUser, loadCourseAccess, signOut as supabaseSignOut } from "./services/auth";
-import { supabase } from "./lib/supabase";
+import { supabase, supabaseConfigured } from "./lib/supabase";
 
 function normalizeCourses(courses: Course[]): Course[] {
   return courses
@@ -123,6 +123,8 @@ export function App() {
     let isRecoveryRedirect = false;
 
     async function init() {
+      if (!supabaseConfigured) return; // Skip auth if Supabase not configured
+
       try {
         // ── 1. Detect PKCE recovery code in the URL ──
         const params = new URLSearchParams(window.location.search);
@@ -170,22 +172,26 @@ export function App() {
     init().finally(() => { clearTimeout(timeout); setAppReady(true); });
 
     // Listen for auth state changes (e.g. email confirmation redirect)
+    if (!supabaseConfigured) return;
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange(async (event, session) => {
       if (event === "SIGNED_IN" && session?.user) {
-        // If this sign-in is actually a recovery redirect, don't restore profile
         if (isRecoveryRedirect) return;
-        const result = await getCurrentUser();
-        if (result.ok && result.student) {
-          const access = await loadCourseAccess();
-          setStudent((prev) => ({
-            ...prev,
-            ...result.student,
-            courseAccess: access.length > 0 ? access : prev.courseAccess,
-          }));
+        try {
+          const result = await getCurrentUser();
+          if (result.ok && result.student) {
+            const access = await loadCourseAccess();
+            setStudent((prev) => ({
+              ...prev,
+              ...result.student,
+              courseAccess: access.length > 0 ? access : prev.courseAccess,
+            }));
+          }
+        } catch (err) {
+          console.warn("Auth state change handler failed:", err);
         }
       }
       if (event === "PASSWORD_RECOVERY") {
-        // User clicked the password reset link — send them to the reset form
         isRecoveryRedirect = true;
         setRecoveryReady(true);
         window.location.hash = "#/reset-password";

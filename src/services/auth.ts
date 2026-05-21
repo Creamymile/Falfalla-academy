@@ -1,4 +1,4 @@
-import { supabase } from "../lib/supabase";
+import { supabase, supabaseConfigured, withTimeout } from "../lib/supabase";
 import type { StudentState } from "../types";
 import { initialState } from "../state";
 import { generateDeviceId, generateSessionToken, registerSession } from "./access";
@@ -13,6 +13,8 @@ export async function signUp(
   password: string,
   name: string,
 ): Promise<AuthResult> {
+  if (!supabaseConfigured) return { ok: false, error: "Service unavailable. Please try again later." };
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
@@ -60,6 +62,8 @@ export async function signIn(
   email: string,
   password: string,
 ): Promise<AuthResult> {
+  if (!supabaseConfigured) return { ok: false, error: "Service unavailable. Please try again later." };
+
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -82,7 +86,7 @@ export async function signIn(
   registerSession(email, sessionToken);
 
   // Fetch profile
-  const { data: profile, error: profileError } = await supabase
+  const { data: profile } = await supabase
     .from("profiles")
     .select("name, role")
     .eq("id", data.user.id)
@@ -109,11 +113,7 @@ export async function signIn(
 
 // ── Forgot Password (send reset email) ─────────────────────
 export async function resetPassword(email: string): Promise<{ ok: boolean; error?: string }> {
-  // Redirect to plain origin — NOT a hash route.
-  // Supabase appends tokens as query params (?code=xxx) or hash fragments (#access_token=xxx).
-  // If we put /#/reset-password here, those tokens land inside the hash and the
-  // Supabase client can't detect them. Instead we redirect to the origin and let
-  // the PASSWORD_RECOVERY event in App.tsx navigate to #/reset-password.
+  if (!supabaseConfigured) return { ok: false, error: "Service unavailable." };
   const siteUrl = import.meta.env.VITE_SITE_URL ?? window.location.origin;
   const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
     redirectTo: siteUrl,
@@ -124,6 +124,7 @@ export async function resetPassword(email: string): Promise<{ ok: boolean; error
 
 // ── Update Password (after reset link clicked) ─────────────
 export async function updatePassword(newPassword: string): Promise<{ ok: boolean; error?: string }> {
+  if (!supabaseConfigured) return { ok: false, error: "Service unavailable." };
   const { error } = await supabase.auth.updateUser({ password: newPassword });
   if (error) return { ok: false, error: error.message };
   return { ok: true };
@@ -132,7 +133,9 @@ export async function updatePassword(newPassword: string): Promise<{ ok: boolean
 // ── Sign Out ────────────────────────────────────────────────
 export async function signOut(): Promise<void> {
   try {
-    await supabase.auth.signOut();
+    if (supabaseConfigured) {
+      await withTimeout(supabase.auth.signOut(), 3000, { error: null });
+    }
   } catch (err) {
     console.warn("Supabase signOut failed:", err);
   }
@@ -140,18 +143,25 @@ export async function signOut(): Promise<void> {
 
 // ── Get Current Session ─────────────────────────────────────
 export async function getCurrentUser(): Promise<AuthResult> {
-  try {
-    const { data: { user }, error } = await supabase.auth.getUser();
+  if (!supabaseConfigured) return { ok: false, error: "Not configured" };
 
+  try {
+    const result = await withTimeout(
+      supabase.auth.getUser(),
+      5000,
+      { data: { user: null }, error: new Error("Timeout") as any },
+    );
+
+    const { data: { user }, error } = result;
     if (error || !user) {
       return { ok: false, error: "Not authenticated" };
     }
 
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("name, role, device_id")
-      .eq("id", user.id)
-      .single();
+    const { data: profile } = await withTimeout(
+      Promise.resolve(supabase.from("profiles").select("name, role, device_id").eq("id", user.id).single()),
+      5000,
+      { data: null, error: null } as any,
+    );
 
     return {
       ok: true,
@@ -171,27 +181,40 @@ export async function getCurrentUser(): Promise<AuthResult> {
 
 // ── Load Course Access from DB ──────────────────────────────
 export async function loadCourseAccess() {
-  const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return [];
+  if (!supabaseConfigured) return [];
 
-  const { data, error } = await supabase
-    .from("course_access")
-    .select("*")
-    .eq("user_id", user.id);
+  try {
+    const { data: { user } } = await withTimeout(
+      supabase.auth.getUser(),
+      5000,
+      { data: { user: null }, error: null } as any,
+    );
+    if (!user) return [];
 
-  if (error || !data) return [];
+    const { data, error } = await withTimeout(
+      Promise.resolve(supabase.from("course_access").select("*").eq("user_id", user.id)),
+      5000,
+      { data: null, error: new Error("Timeout") } as any,
+    );
 
-  return data.map((row: any) => ({
-    courseId: row.course_id,
-    grantedAt: row.granted_at,
-    expiresAt: row.expires_at,
-    accessCodeId: row.access_code_id,
-    source: row.source as "code" | "purchase" | "admin",
-  }));
+    if (error || !data) return [];
+
+    return data.map((row: any) => ({
+      courseId: row.course_id,
+      grantedAt: row.granted_at,
+      expiresAt: row.expires_at,
+      accessCodeId: row.access_code_id,
+      source: row.source as "code" | "purchase" | "admin",
+    }));
+  } catch {
+    return [];
+  }
 }
 
 // ── Redeem Access Code via DB ───────────────────────────────
 export async function redeemCodeInDb(code: string) {
+  if (!supabaseConfigured) return { ok: false as const, error: "Service unavailable." };
+
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { ok: false as const, error: "Not authenticated" };
 

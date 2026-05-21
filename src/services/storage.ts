@@ -1,4 +1,4 @@
-import { supabase } from "../lib/supabase";
+import { supabase, supabaseConfigured, withTimeout } from "../lib/supabase";
 
 // ── Bucket Names ───────────────────────────────────────────
 const BUCKETS = {
@@ -65,18 +65,19 @@ async function uploadFile(
   file: File,
   onProgress?: (pct: number) => void,
 ): Promise<{ ok: true; url: string } | { ok: false; error: string }> {
+  if (!supabaseConfigured) return { ok: false, error: "Storage not configured" };
+
   try {
     onProgress?.(10);
 
-    const { error } = await supabase.storage
-      .from(bucket)
-      .upload(path, file, {
-        cacheControl: "3600",
-        upsert: true,
-      });
+    const uploadResult = await withTimeout(
+      supabase.storage.from(bucket).upload(path, file, { cacheControl: "3600", upsert: true }),
+      30000,
+      { error: { message: "Upload timed out" } } as any,
+    );
 
-    if (error) {
-      return { ok: false, error: error.message };
+    if (uploadResult.error) {
+      return { ok: false, error: uploadResult.error.message };
     }
 
     onProgress?.(90);
