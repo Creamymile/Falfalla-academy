@@ -1,4 +1,4 @@
-import { Camera, Heart, MessageCircle } from "lucide-react";
+import { Camera, Heart, MessageCircle, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { go } from "../router";
 import { Course, ProjectUpload, StudentState } from "../types";
@@ -40,6 +40,14 @@ export function Gallery({
     setCommentDrafts({ ...commentDrafts, [id]: "" });
   };
 
+  const canDelete = (upload: ProjectUpload) =>
+    student.isAuthenticated && (upload.user === student.name || student.role === "admin");
+
+  const deleteUpload = (id: string) => {
+    if (!confirm("Delete this upload? This cannot be undone.")) return;
+    updateUploads(uploads.filter((u) => u.id !== id));
+  };
+
   return (
     <section className="page">
       <div className="toolbar">
@@ -66,6 +74,9 @@ export function Gallery({
                   />
                   <button className="secondary" onClick={() => comment(upload.id)} aria-label="Post comment"><MessageCircle size={16} /> Comment</button>
                 </>
+              )}
+              {canDelete(upload) && (
+                <button className="secondary danger" onClick={() => deleteUpload(upload.id)} aria-label="Delete upload" title="Delete upload"><Trash2 size={16} /></button>
               )}
             </div>
             {upload.comments.length > 0 && (
