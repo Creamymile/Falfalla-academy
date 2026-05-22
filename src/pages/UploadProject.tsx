@@ -53,7 +53,7 @@ export function UploadProject({
 
       const today = new Date().toISOString().slice(0, 10);
       updateUploads([
-        { id: `upload-${Date.now()}`, user: student.name, title: title.trim(), pattern, courseId, imageUrl: finalImageUrl, notes, likes: 0, createdAt: today, comments: [] },
+        { id: `upload-${Date.now()}`, user: student.name, userEmail: student.email, title: title.trim(), pattern, courseId, imageUrl: finalImageUrl, notes, likes: 0, createdAt: today, comments: [] },
         ...uploads,
       ]);
       setTitle(""); setNotes(""); setImageUrl(""); setPreviewUrl(""); setSelectedFile(null); setSuccess(true);

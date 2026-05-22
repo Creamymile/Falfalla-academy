@@ -76,6 +76,7 @@ export type LessonRequest = {
 export type ProjectUpload = {
   id: string;
   user: string;
+  userEmail: string;
   title: string;
   pattern: "Heart" | "Tulip" | "Rosetta" | "Swan" | "Free Pour";
   courseId: string;

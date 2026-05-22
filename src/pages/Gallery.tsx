@@ -41,7 +41,7 @@ export function Gallery({
   };
 
   const canDelete = (upload: ProjectUpload) =>
-    student.isAuthenticated && (upload.user === student.name || student.role === "admin");
+    student.isAuthenticated && (upload.userEmail === student.email || student.role === "admin");
 
   const deleteUpload = (id: string) => {
     if (!confirm("Delete this upload? This cannot be undone.")) return;
