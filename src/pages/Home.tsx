@@ -156,13 +156,6 @@ export function Home({
         </details>
       </section>
 
-      <section className="notice-band">
-        <ShieldCheck size={18} />
-        <p>
-          Falfalla Academy is built as SCA-aligned professional preparation. Official
-          SCA certificates require training and assessment through an Authorized SCA Trainer.
-        </p>
-      </section>
 
     </>
   );
