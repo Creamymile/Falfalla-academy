@@ -18,9 +18,10 @@ export type Route =
   | { name: "privacy" }
   | { name: "notFound" };
 
-export function routeFromHash(): Route {
-  const hash = window.location.hash.replace(/^#\/?/, "");
-  const parts = hash.split("/").filter(Boolean);
+export function routeFromPath(): Route {
+  const path = window.location.pathname.replace(/\/$/, "") || "/";
+  const parts = path.split("/").filter(Boolean);
+
   if (parts[0] === "courses" && parts[1] && parts[2] === "lessons" && parts[3])
     return { name: "lesson", slug: parts[1], lessonId: parts[3] };
   if (parts[0] === "courses" && parts[1]) return { name: "course", slug: parts[1] };
@@ -38,36 +39,37 @@ export function routeFromHash(): Route {
   if (parts[0] === "reset-password") return { name: "reset-password" };
   if (parts[0] === "terms") return { name: "terms" };
   if (parts[0] === "privacy") return { name: "privacy" };
-  if (parts.length === 0 || !parts[0]) return { name: "home" };
-  // Supabase recovery/auth redirects put tokens in the hash — treat as home
-  // (the auth state listener will navigate to the correct page)
-  if (hash.includes("access_token=") || hash.includes("type=recovery")) return { name: "home" };
+  if (parts.length === 0 || path === "/") return { name: "home" };
   return { name: "notFound" };
 }
 
-export function pathFor(route: Route) {
+// Keep old export name as alias so nothing else breaks
+export const routeFromHash = routeFromPath;
+
+export function pathFor(route: Route): string {
   switch (route.name) {
-    case "home": return "#/";
-    case "courses": return "#/courses";
-    case "dashboard": return "#/dashboard";
-    case "gallery": return "#/gallery";
-    case "upload": return "#/upload";
-    case "pricing": return "#/pricing";
-    case "profile": return "#/profile";
-    case "certificate": return "#/certificate";
-    case "checkout": return "#/checkout";
-    case "course": return `#/courses/${route.slug}`;
-    case "lesson": return `#/courses/${route.slug}/lessons/${route.lessonId}`;
-    case "admin": return "#/admin";
-    case "login": return "#/login";
-    case "redeem": return "#/redeem";
-    case "reset-password": return "#/reset-password";
-    case "terms": return "#/terms";
-    case "privacy": return "#/privacy";
-    case "notFound": return "#/404";
+    case "home":         return "/";
+    case "courses":      return "/courses";
+    case "dashboard":    return "/dashboard";
+    case "gallery":      return "/gallery";
+    case "upload":       return "/upload";
+    case "pricing":      return "/pricing";
+    case "profile":      return "/profile";
+    case "certificate":  return "/certificate";
+    case "checkout":     return "/checkout";
+    case "course":       return `/courses/${route.slug}`;
+    case "lesson":       return `/courses/${route.slug}/lessons/${route.lessonId}`;
+    case "admin":        return "/admin";
+    case "login":        return "/login";
+    case "redeem":       return "/redeem";
+    case "reset-password": return "/reset-password";
+    case "terms":        return "/terms";
+    case "privacy":      return "/privacy";
+    case "notFound":     return "/404";
   }
 }
 
 export function go(route: Route) {
-  window.location.hash = pathFor(route);
+  window.history.pushState({}, "", pathFor(route));
+  window.dispatchEvent(new PopStateEvent("popstate"));
 }

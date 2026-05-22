@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Confirm your email</title>
+</head>
+<body style="margin:0;padding:0;background-color:#F5E6D3;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#F5E6D3;padding:40px 20px;">
+    <tr>
+      <td align="center">
+        <table role="presentation" width="480" cellpadding="0" cellspacing="0" style="background-color:#FFFBF7;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(61,40,23,0.08);">
+          <!-- Header -->
+          <tr>
+            <td style="background:linear-gradient(135deg,#6B4423 0%,#3D2817 100%);padding:36px 40px;text-align:center;">
+              <div style="font-size:28px;font-weight:800;color:#FFFBF7;letter-spacing:-0.5px;">Falfalla Academy</div>
+              <div style="font-size:13px;color:#D4A574;margin-top:4px;letter-spacing:1.5px;text-transform:uppercase;">Latte Art Mastery</div>
+            </td>
+          </tr>
+          <!-- Coffee bean divider -->
+          <tr>
+            <td style="background-color:#D4A574;height:4px;font-size:0;line-height:0;">&nbsp;</td>
+          </tr>
+          <!-- Body -->
+          <tr>
+            <td style="padding:40px 40px 20px;">
+              <div style="text-align:center;margin-bottom:24px;">
+                <span style="font-size:48px;">&#9749;</span>
+              </div>
+              <h1 style="margin:0 0 8px;font-size:24px;font-weight:700;color:#3D2817;text-align:center;">Welcome, barista!</h1>
+              <p style="margin:0 0 24px;font-size:15px;color:#6B4423;text-align:center;line-height:1.6;">
+                You're one step away from mastering latte art. Confirm your email to unlock your learning journey.
+              </p>
+              <!-- CTA Button -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" style="padding:8px 0 24px;">
+                    <a href="{{ .ConfirmationURL }}" target="_blank" style="display:inline-block;background:linear-gradient(135deg,#6B4423 0%,#8B5E3C 100%);color:#FFFBF7;text-decoration:none;font-size:16px;font-weight:600;padding:14px 40px;border-radius:10px;letter-spacing:0.3px;box-shadow:0 4px 12px rgba(107,68,35,0.3);">
+                      Confirm my email
+                    </a>
+                  </td>
+                </tr>
+              </table>
+              <p style="margin:0 0 16px;font-size:13px;color:#9B8B7D;text-align:center;line-height:1.6;">
+                If the button doesn't work, copy and paste this link into your browser:
+              </p>
+              <p style="margin:0 0 24px;font-size:12px;color:#D4A574;text-align:center;word-break:break-all;line-height:1.5;">
+                {{ .ConfirmationURL }}
+              </p>
+            </td>
+          </tr>
+          <!-- Divider -->
+          <tr>
+            <td style="padding:0 40px;">
+              <div style="border-top:1px solid #F0E4D6;"></div>
+            </td>
+          </tr>
+          <!-- What's next -->
+          <tr>
+            <td style="padding:24px 40px;">
+              <p style="margin:0 0 16px;font-size:14px;font-weight:600;color:#3D2817;text-align:center;">What's waiting for you:</p>
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td width="33%" style="text-align:center;padding:8px;">
+                    <div style="font-size:24px;margin-bottom:4px;">&#x1F95B;</div>
+                    <div style="font-size:12px;color:#6B4423;font-weight:600;">Milk Texturing</div>
+                  </td>
+                  <td width="33%" style="text-align:center;padding:8px;">
+                    <div style="font-size:24px;margin-bottom:4px;">&#x1F3A8;</div>
+                    <div style="font-size:12px;color:#6B4423;font-weight:600;">Pour Patterns</div>
+                  </td>
+                  <td width="33%" style="text-align:center;padding:8px;">
+                    <div style="font-size:24px;margin-bottom:4px;">&#x1F3C6;</div>
+                    <div style="font-size:12px;color:#6B4423;font-weight:600;">Certification</div>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <!-- Footer -->
+          <tr>
+            <td style="background-color:#3D2817;padding:24px 40px;text-align:center;">
+              <p style="margin:0 0 4px;font-size:13px;color:#D4A574;font-weight:600;">Falfalla Academy</p>
+              <p style="margin:0;font-size:11px;color:#8B7B6B;">Premium latte art education for aspiring baristas</p>
+            </td>
+          </tr>
+        </table>
+        <!-- Sub-footer -->
+        <p style="margin:20px 0 0;font-size:11px;color:#9B8B7D;text-align:center;">
+          If you didn't create an account, you can safely ignore this email.
+        </p>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "courses": "الدورات",
+    "gallery": "المعرض",
+    "pricing": "الأسعار",
+    "dashboard": "لوحة التحكم",
+    "upload": "رفع",
+    "redeem": "استرداد",
+    "profile": "الملف الشخصي",
+    "admin": "الإدارة",
+    "signIn": "تسجيل الدخول",
+    "logOut": "تسجيل الخروج"
+  },
+  "home": {
+    "hero_eyebrow": "تعليم فن القهوة المتميز",
+    "hero_title": "أتقن فن السكب",
+    "hero_subtitle": "تدريب باريستا متوافق مع SCA من مستوى المبتدئين إلى المسابقات. تعلم تحضير الحليب والتحكم في السكب والأنماط المميزة.",
+    "hero_cta_primary": "استكشف الدورات",
+    "hero_cta_secondary": "عرض الأسعار",
+    "courses_title": "ماذا ستتعلم",
+    "courses_subtitle": "ثلاث دورات مصممة بعناية تأخذك من أساسيات الإسبريسو إلى أنماط المنافسة المتقدمة.",
+    "testimonials_title": "ماذا يقول طلابنا",
+    "testimonials_empty": "كن أول من يكتب مراجعة",
+    "pricing_title": "ابدأ رحلتك اليوم",
+    "pricing_subtitle": "اختر الدورة التي تناسب مستواك.",
+    "faq_title": "الأسئلة الشائعة"
+  },
+  "courses": {
+    "title": "جميع الدورات",
+    "subtitle": "اختر مسارك وابدأ السكب.",
+    "enroll": "سجل الآن",
+    "enrolled": "مسجل",
+    "continue": "متابعة التعلم",
+    "lessons": "دروس",
+    "level_beginner": "مبتدئ",
+    "level_intermediate": "متوسط",
+    "level_advanced": "متقدم"
+  },
+  "lesson": {
+    "complete": "وضع علامة مكتمل",
+    "completed": "مكتمل",
+    "notes": "ملاحظاتك",
+    "notes_placeholder": "اكتب ملاحظات التدريب هنا...",
+    "resources": "الموارد",
+    "practice": "رفع تدريب",
+    "video_coming": "الفيديو قريباً",
+    "next_lesson": "الدرس التالي",
+    "prev_lesson": "الدرس السابق"
+  },
+  "dashboard": {
+    "title": "لوحة التحكم",
+    "welcome": "مرحباً بعودتك",
+    "continue_learning": "متابعة التعلم",
+    "your_courses": "دوراتك",
+    "progress": "التقدم",
+    "completed": "مكتمل",
+    "streak": "أيام متتالية",
+    "uploads": "رفوعاتك",
+    "no_courses": "لم تسجل في أي دورات بعد.",
+    "browse_courses": "تصفح الدورات"
+  },
+  "gallery": {
+    "title": "معرض فن اللاتيه",
+    "subtitle": "المجتمع",
+    "upload_btn": "رفع محاولة",
+    "like": "إعجاب",
+    "comment": "تعليق",
+    "comment_placeholder": "أضف تعليقاً",
+    "delete": "حذف الرفع",
+    "filter_all": "الكل",
+    "empty": "لا توجد رفوعات بعد. كن أول من يشارك!"
+  },
+  "upload": {
+    "title": "شارك فن اللاتيه الخاص بك",
+    "eyebrow": "رفع تدريبي",
+    "project_title": "عنوان المشروع",
+    "pattern": "النمط",
+    "course": "الدورة المرتبطة",
+    "notes": "ملاحظات التدريب",
+    "choose_image": "اختر صورة فن اللاتيه",
+    "publish": "نشر في المعرض",
+    "uploading": "جارٍ الرفع...",
+    "success": "تم إضافة الرفع إلى معرض المجتمع."
+  },
+  "pricing": {
+    "title": "أسعار بسيطة وشفافة",
+    "subtitle": "وصول لمرة واحدة لكل دورة. بدون اشتراكات.",
+    "per_course": "لكل دورة",
+    "get_access": "احصل على الوصول",
+    "included": "ما هو مشمول",
+    "access_code": "هل لديك رمز وصول؟",
+    "redeem_here": "استرده هنا"
+  },
+  "auth": {
+    "sign_in": "تسجيل الدخول",
+    "sign_up": "إنشاء حساب",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "name": "الاسم الكامل",
+    "forgot_password": "نسيت كلمة المرور؟",
+    "no_account": "ليس لديك حساب؟",
+    "have_account": "لديك حساب بالفعل؟",
+    "reset_sent": "تم إرسال رسالة إعادة تعيين كلمة المرور. تحقق من بريدك الوارد.",
+    "reset_password": "إعادة تعيين كلمة المرور",
+    "new_password": "كلمة المرور الجديدة",
+    "update_password": "تحديث كلمة المرور"
+  },
+  "footer": {
+    "tagline": "تعليم فن اللاتيه المتميز للباريستا الطموحين.",
+    "learn": "تعلم",
+    "community": "المجتمع",
+    "company": "الشركة",
+    "terms": "الشروط",
+    "privacy": "الخصوصية",
+    "rights": "جميع الحقوق محفوظة."
+  },
+  "common": {
+    "loading": "جارٍ التحميل...",
+    "error": "حدث خطأ ما.",
+    "back": "رجوع",
+    "save": "حفظ",
+    "cancel": "إلغاء",
+    "close": "إغلاق",
+    "search": "بحث"
+  }
+}

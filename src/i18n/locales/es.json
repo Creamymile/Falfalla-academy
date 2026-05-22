@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "courses": "Cursos",
+    "gallery": "Galería",
+    "pricing": "Precios",
+    "dashboard": "Panel",
+    "upload": "Subir",
+    "redeem": "Canjear",
+    "profile": "Perfil",
+    "admin": "Admin",
+    "signIn": "Iniciar sesión",
+    "logOut": "Cerrar sesión"
+  },
+  "home": {
+    "hero_eyebrow": "Educación Premium en Arte del Café",
+    "hero_title": "Domina el Arte del Vertido",
+    "hero_subtitle": "Formación de barista alineada con SCA desde principiante hasta nivel de competición. Aprende textura de leche, control de vertido y patrones únicos.",
+    "hero_cta_primary": "Explorar Cursos",
+    "hero_cta_secondary": "Ver Precios",
+    "courses_title": "Lo que Aprenderás",
+    "courses_subtitle": "Tres cursos diseñados para llevarte desde los conceptos básicos del espresso hasta patrones de nivel competición.",
+    "testimonials_title": "Lo que Dicen Nuestros Estudiantes",
+    "testimonials_empty": "Sé el primero en opinar",
+    "pricing_title": "Comienza tu Camino Hoy",
+    "pricing_subtitle": "Elige el curso que se adapta a tu nivel.",
+    "faq_title": "Preguntas Frecuentes"
+  },
+  "courses": {
+    "title": "Todos los Cursos",
+    "subtitle": "Elige tu camino y empieza a verter.",
+    "enroll": "Inscribirse",
+    "enrolled": "Inscrito",
+    "continue": "Continuar Aprendiendo",
+    "lessons": "lecciones",
+    "level_beginner": "Principiante",
+    "level_intermediate": "Intermedio",
+    "level_advanced": "Avanzado"
+  },
+  "lesson": {
+    "complete": "Marcar como Completo",
+    "completed": "Completado",
+    "notes": "Tus Notas",
+    "notes_placeholder": "Escribe tus notas de práctica aquí...",
+    "resources": "Recursos",
+    "practice": "Subir Práctica",
+    "video_coming": "Video próximamente",
+    "next_lesson": "Siguiente Lección",
+    "prev_lesson": "Lección Anterior"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "welcome": "Bienvenido de nuevo",
+    "continue_learning": "Continuar Aprendiendo",
+    "your_courses": "Tus Cursos",
+    "progress": "Progreso",
+    "completed": "Completado",
+    "streak": "Días Seguidos",
+    "uploads": "Tus Subidas",
+    "no_courses": "Aún no te has inscrito en ningún curso.",
+    "browse_courses": "Ver Cursos"
+  },
+  "gallery": {
+    "title": "Galería de Arte Latte",
+    "subtitle": "Comunidad",
+    "upload_btn": "Subir Intento",
+    "like": "Me gusta",
+    "comment": "Comentar",
+    "comment_placeholder": "Añade un comentario",
+    "delete": "Eliminar subida",
+    "filter_all": "Todos",
+    "empty": "Aún no hay subidas. ¡Sé el primero en compartir!"
+  },
+  "upload": {
+    "title": "Comparte tu Arte Latte",
+    "eyebrow": "Subida de Práctica",
+    "project_title": "Título del proyecto",
+    "pattern": "Patrón",
+    "course": "Curso relacionado",
+    "notes": "Notas de práctica",
+    "choose_image": "Elige imagen de arte latte",
+    "publish": "Publicar en Galería",
+    "uploading": "Subiendo...",
+    "success": "Subida añadida a la galería de la comunidad."
+  },
+  "pricing": {
+    "title": "Precios Simples y Transparentes",
+    "subtitle": "Acceso único por curso. Sin suscripciones.",
+    "per_course": "por curso",
+    "get_access": "Obtener Acceso",
+    "included": "Qué incluye",
+    "access_code": "¿Tienes un código de acceso?",
+    "redeem_here": "Canjéalo aquí"
+  },
+  "auth": {
+    "sign_in": "Iniciar Sesión",
+    "sign_up": "Crear Cuenta",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "name": "Nombre completo",
+    "forgot_password": "¿Olvidaste tu contraseña?",
+    "no_account": "¿No tienes cuenta?",
+    "have_account": "¿Ya tienes una cuenta?",
+    "reset_sent": "Correo de restablecimiento enviado. Revisa tu bandeja de entrada.",
+    "reset_password": "Restablecer Contraseña",
+    "new_password": "Nueva Contraseña",
+    "update_password": "Actualizar Contraseña"
+  },
+  "footer": {
+    "tagline": "Educación premium en arte del café para baristas.",
+    "learn": "Aprender",
+    "community": "Comunidad",
+    "company": "Empresa",
+    "terms": "Términos",
+    "privacy": "Privacidad",
+    "rights": "Todos los derechos reservados."
+  },
+  "common": {
+    "loading": "Cargando...",
+    "error": "Algo salió mal.",
+    "back": "Volver",
+    "save": "Guardar",
+    "cancel": "Cancelar",
+    "close": "Cerrar",
+    "search": "Buscar"
+  }
+}

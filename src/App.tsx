@@ -71,11 +71,10 @@ export function App() {
       setPageLoading(true);
       setRoute(routeFromHash());
       window.scrollTo({ top: 0 });
-      // Brief loading to allow render
       setTimeout(() => setPageLoading(false), 150);
     };
-    window.addEventListener("hashchange", sync);
-    return () => window.removeEventListener("hashchange", sync);
+    window.addEventListener("popstate", sync);
+    return () => window.removeEventListener("popstate", sync);
   }, []);
 
   // Per-page document.title for SEO and browser tabs
@@ -136,14 +135,15 @@ export function App() {
             if (!error && data.session) {
               isRecoveryRedirect = true;
               setRecoveryReady(true);
-              window.location.hash = "#/reset-password";
-              window.history.replaceState({}, "", window.location.pathname + window.location.hash);
+              window.history.replaceState({}, "", "/reset-password");
+              window.dispatchEvent(new PopStateEvent("popstate"));
               return;
             }
           } catch {
             // Code exchange failed — fall through to normal init
           }
-          window.history.replaceState({}, "", window.location.pathname + window.location.hash);
+          // Clean the ?code= from the URL
+          window.history.replaceState({}, "", window.location.pathname);
         }
 
         // ── 2. Also detect implicit-flow recovery tokens in the hash ──
@@ -194,7 +194,8 @@ export function App() {
       if (event === "PASSWORD_RECOVERY") {
         isRecoveryRedirect = true;
         setRecoveryReady(true);
-        window.location.hash = "#/reset-password";
+        window.history.replaceState({}, "", "/reset-password");
+        window.dispatchEvent(new PopStateEvent("popstate"));
       }
       if (event === "SIGNED_OUT") {
         setStudent(initialState);

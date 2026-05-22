@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "courses": "Kursus",
+    "gallery": "Galeri",
+    "pricing": "Harga",
+    "dashboard": "Dasbor",
+    "upload": "Unggah",
+    "redeem": "Tukarkan",
+    "profile": "Profil",
+    "admin": "Admin",
+    "signIn": "Masuk",
+    "logOut": "Keluar"
+  },
+  "home": {
+    "hero_eyebrow": "Pendidikan Seni Latte Premium",
+    "hero_title": "Kuasai Seni Menuang",
+    "hero_subtitle": "Pelatihan barista sesuai standar SCA dari pemula hingga tingkat kompetisi. Pelajari tekstur susu, kontrol menuang, dan pola khas.",
+    "hero_cta_primary": "Jelajahi Kursus",
+    "hero_cta_secondary": "Lihat Harga",
+    "courses_title": "Yang Akan Anda Pelajari",
+    "courses_subtitle": "Tiga kursus yang dirancang dengan cermat untuk membawa Anda dari dasar espresso hingga pola tingkat kompetisi.",
+    "testimonials_title": "Kata Siswa Kami",
+    "testimonials_empty": "Jadilah yang pertama memberi ulasan",
+    "pricing_title": "Mulai Perjalanan Anda Hari Ini",
+    "pricing_subtitle": "Pilih kursus yang sesuai dengan level Anda.",
+    "faq_title": "Pertanyaan yang Sering Diajukan"
+  },
+  "courses": {
+    "title": "Semua Kursus",
+    "subtitle": "Pilih jalur Anda dan mulai menuang.",
+    "enroll": "Daftar Sekarang",
+    "enrolled": "Terdaftar",
+    "continue": "Lanjutkan Belajar",
+    "lessons": "pelajaran",
+    "level_beginner": "Pemula",
+    "level_intermediate": "Menengah",
+    "level_advanced": "Mahir"
+  },
+  "lesson": {
+    "complete": "Tandai Selesai",
+    "completed": "Selesai",
+    "notes": "Catatan Anda",
+    "notes_placeholder": "Tulis catatan latihan Anda di sini...",
+    "resources": "Sumber Daya",
+    "practice": "Unggah Latihan",
+    "video_coming": "Video segera hadir",
+    "next_lesson": "Pelajaran Berikutnya",
+    "prev_lesson": "Pelajaran Sebelumnya"
+  },
+  "dashboard": {
+    "title": "Dasbor",
+    "welcome": "Selamat datang kembali",
+    "continue_learning": "Lanjutkan Belajar",
+    "your_courses": "Kursus Anda",
+    "progress": "Kemajuan",
+    "completed": "Selesai",
+    "streak": "Hari Beruntun",
+    "uploads": "Unggahan Anda",
+    "no_courses": "Anda belum mendaftar kursus apapun.",
+    "browse_courses": "Telusuri Kursus"
+  },
+  "gallery": {
+    "title": "Galeri Seni Latte",
+    "subtitle": "Komunitas",
+    "upload_btn": "Unggah Percobaan",
+    "like": "Suka",
+    "comment": "Komentar",
+    "comment_placeholder": "Tambahkan komentar",
+    "delete": "Hapus unggahan",
+    "filter_all": "Semua",
+    "empty": "Belum ada unggahan. Jadilah yang pertama berbagi!"
+  },
+  "upload": {
+    "title": "Bagikan Seni Latte Anda",
+    "eyebrow": "Unggah Latihan",
+    "project_title": "Judul proyek",
+    "pattern": "Pola",
+    "course": "Kursus terkait",
+    "notes": "Catatan latihan",
+    "choose_image": "Pilih gambar seni latte",
+    "publish": "Publikasikan ke Galeri",
+    "uploading": "Mengunggah...",
+    "success": "Unggahan ditambahkan ke galeri komunitas."
+  },
+  "pricing": {
+    "title": "Harga Sederhana dan Transparan",
+    "subtitle": "Akses sekali bayar per kursus. Tanpa langganan.",
+    "per_course": "per kursus",
+    "get_access": "Dapatkan Akses",
+    "included": "Yang termasuk",
+    "access_code": "Punya kode akses?",
+    "redeem_here": "Tukarkan di sini"
+  },
+  "auth": {
+    "sign_in": "Masuk",
+    "sign_up": "Buat Akun",
+    "email": "Email",
+    "password": "Kata Sandi",
+    "name": "Nama Lengkap",
+    "forgot_password": "Lupa kata sandi?",
+    "no_account": "Belum punya akun?",
+    "have_account": "Sudah punya akun?",
+    "reset_sent": "Email reset kata sandi terkirim. Periksa kotak masuk Anda.",
+    "reset_password": "Reset Kata Sandi",
+    "new_password": "Kata Sandi Baru",
+    "update_password": "Perbarui Kata Sandi"
+  },
+  "footer": {
+    "tagline": "Pendidikan seni latte premium untuk barista yang bersemangat.",
+    "learn": "Belajar",
+    "community": "Komunitas",
+    "company": "Perusahaan",
+    "terms": "Syarat",
+    "privacy": "Privasi",
+    "rights": "Semua hak dilindungi."
+  },
+  "common": {
+    "loading": "Memuat...",
+    "error": "Terjadi kesalahan.",
+    "back": "Kembali",
+    "save": "Simpan",
+    "cancel": "Batal",
+    "close": "Tutup",
+    "search": "Cari"
+  }
+}

@@ -1,56 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://falfalla-academy.com/</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://falfalla-academy.com/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://falfalla-academy.com/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://falfalla-academy.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://falfalla-academy.com/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://falfalla-academy.com/"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://falfalla-academy.com/"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://falfalla-academy.com/"/>
   </url>
   <url>
     <loc>https://falfalla-academy.com/courses</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://falfalla-academy.com/courses/barista-foundations</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://falfalla-academy.com/courses/latte-art-fundamentals</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://falfalla-academy.com/courses/latte-art-advanced</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
     <loc>https://falfalla-academy.com/pricing</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://falfalla-academy.com/gallery</loc>
-    <lastmod>2026-05-13</lastmod>
-    <changefreq>weekly</changefreq>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>daily</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
+    <loc>https://falfalla-academy.com/login</loc>
+    <lastmod>2026-05-22</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
     <loc>https://falfalla-academy.com/terms</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://falfalla-academy.com/privacy</loc>
-    <lastmod>2026-05-13</lastmod>
+    <lastmod>2026-05-22</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

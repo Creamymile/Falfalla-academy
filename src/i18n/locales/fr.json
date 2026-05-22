@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "courses": "Cours",
+    "gallery": "Galerie",
+    "pricing": "Tarifs",
+    "dashboard": "Tableau de bord",
+    "upload": "Télécharger",
+    "redeem": "Échanger",
+    "profile": "Profil",
+    "admin": "Admin",
+    "signIn": "Se connecter",
+    "logOut": "Se déconnecter"
+  },
+  "home": {
+    "hero_eyebrow": "Formation Premium en Art du Café",
+    "hero_title": "Maîtrisez l'Art du Versement",
+    "hero_subtitle": "Formation barista alignée SCA du niveau débutant à la compétition. Apprenez la texture du lait, le contrôle du versement et les motifs signature.",
+    "hero_cta_primary": "Explorer les Cours",
+    "hero_cta_secondary": "Voir les Tarifs",
+    "courses_title": "Ce que Vous Apprendrez",
+    "courses_subtitle": "Trois cours soigneusement conçus pour vous emmener des bases de l'espresso aux motifs de niveau compétition.",
+    "testimonials_title": "Ce que Disent nos Étudiants",
+    "testimonials_empty": "Soyez le premier à laisser un avis",
+    "pricing_title": "Commencez Votre Parcours Aujourd'hui",
+    "pricing_subtitle": "Choisissez le cours qui correspond à votre niveau.",
+    "faq_title": "Questions Fréquentes"
+  },
+  "courses": {
+    "title": "Tous les Cours",
+    "subtitle": "Choisissez votre voie et commencez à verser.",
+    "enroll": "S'inscrire",
+    "enrolled": "Inscrit",
+    "continue": "Continuer à Apprendre",
+    "lessons": "leçons",
+    "level_beginner": "Débutant",
+    "level_intermediate": "Intermédiaire",
+    "level_advanced": "Avancé"
+  },
+  "lesson": {
+    "complete": "Marquer comme Terminé",
+    "completed": "Terminé",
+    "notes": "Vos Notes",
+    "notes_placeholder": "Écrivez vos notes de pratique ici...",
+    "resources": "Ressources",
+    "practice": "Télécharger la Pratique",
+    "video_coming": "Vidéo bientôt disponible",
+    "next_lesson": "Leçon Suivante",
+    "prev_lesson": "Leçon Précédente"
+  },
+  "dashboard": {
+    "title": "Tableau de Bord",
+    "welcome": "Bon retour",
+    "continue_learning": "Continuer à Apprendre",
+    "your_courses": "Vos Cours",
+    "progress": "Progression",
+    "completed": "Terminé",
+    "streak": "Jours Consécutifs",
+    "uploads": "Vos Téléchargements",
+    "no_courses": "Vous n'êtes inscrit à aucun cours pour l'instant.",
+    "browse_courses": "Parcourir les Cours"
+  },
+  "gallery": {
+    "title": "Galerie d'Art Latte",
+    "subtitle": "Communauté",
+    "upload_btn": "Télécharger une Tentative",
+    "like": "J'aime",
+    "comment": "Commenter",
+    "comment_placeholder": "Ajouter un commentaire",
+    "delete": "Supprimer le téléchargement",
+    "filter_all": "Tous",
+    "empty": "Pas encore de téléchargements. Soyez le premier à partager !"
+  },
+  "upload": {
+    "title": "Partagez votre Art Latte",
+    "eyebrow": "Téléchargement Pratique",
+    "project_title": "Titre du projet",
+    "pattern": "Motif",
+    "course": "Cours associé",
+    "notes": "Notes de pratique",
+    "choose_image": "Choisir une image d'art latte",
+    "publish": "Publier dans la Galerie",
+    "uploading": "Téléchargement...",
+    "success": "Téléchargement ajouté à la galerie de la communauté."
+  },
+  "pricing": {
+    "title": "Tarification Simple et Transparente",
+    "subtitle": "Accès unique par cours. Sans abonnement.",
+    "per_course": "par cours",
+    "get_access": "Obtenir l'Accès",
+    "included": "Ce qui est inclus",
+    "access_code": "Vous avez un code d'accès ?",
+    "redeem_here": "Échangez ici"
+  },
+  "auth": {
+    "sign_in": "Se Connecter",
+    "sign_up": "Créer un Compte",
+    "email": "Email",
+    "password": "Mot de passe",
+    "name": "Nom complet",
+    "forgot_password": "Mot de passe oublié ?",
+    "no_account": "Pas encore de compte ?",
+    "have_account": "Vous avez déjà un compte ?",
+    "reset_sent": "Email de réinitialisation envoyé. Vérifiez votre boîte de réception.",
+    "reset_password": "Réinitialiser le Mot de Passe",
+    "new_password": "Nouveau Mot de Passe",
+    "update_password": "Mettre à jour le Mot de Passe"
+  },
+  "footer": {
+    "tagline": "Formation premium en art du café pour les baristas en herbe.",
+    "learn": "Apprendre",
+    "community": "Communauté",
+    "company": "Entreprise",
+    "terms": "Conditions",
+    "privacy": "Confidentialité",
+    "rights": "Tous droits réservés."
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite.",
+    "back": "Retour",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "close": "Fermer",
+    "search": "Rechercher"
+  }
+}

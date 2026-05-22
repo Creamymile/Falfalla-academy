@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "courses": "Courses",
+    "gallery": "Gallery",
+    "pricing": "Pricing",
+    "dashboard": "Dashboard",
+    "upload": "Upload",
+    "redeem": "Redeem",
+    "profile": "Profile",
+    "admin": "Admin",
+    "signIn": "Sign in",
+    "logOut": "Log out"
+  },
+  "home": {
+    "hero_eyebrow": "Premium Latte Art Education",
+    "hero_title": "Master the Art of the Pour",
+    "hero_subtitle": "SCA-aligned barista training from beginner to competition level. Learn milk texturing, pour control, and signature patterns.",
+    "hero_cta_primary": "Explore Courses",
+    "hero_cta_secondary": "View Pricing",
+    "courses_title": "What You'll Learn",
+    "courses_subtitle": "Three carefully designed courses that take you from espresso basics to advanced competition-level patterns.",
+    "testimonials_title": "What Our Students Say",
+    "testimonials_empty": "Be the first to review",
+    "pricing_title": "Start Your Journey Today",
+    "pricing_subtitle": "Choose the course that matches your level.",
+    "faq_title": "Frequently Asked Questions"
+  },
+  "courses": {
+    "title": "All Courses",
+    "subtitle": "Choose your path and start pouring.",
+    "enroll": "Enroll Now",
+    "enrolled": "Enrolled",
+    "continue": "Continue Learning",
+    "lessons": "lessons",
+    "level_beginner": "Beginner",
+    "level_intermediate": "Intermediate",
+    "level_advanced": "Advanced"
+  },
+  "lesson": {
+    "complete": "Mark Complete",
+    "completed": "Completed",
+    "notes": "Your Notes",
+    "notes_placeholder": "Write your practice notes here...",
+    "resources": "Resources",
+    "practice": "Upload Practice",
+    "video_coming": "Video coming soon",
+    "next_lesson": "Next Lesson",
+    "prev_lesson": "Previous Lesson"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back",
+    "continue_learning": "Continue Learning",
+    "your_courses": "Your Courses",
+    "progress": "Progress",
+    "completed": "Completed",
+    "streak": "Day Streak",
+    "uploads": "Your Uploads",
+    "no_courses": "You haven't enrolled in any courses yet.",
+    "browse_courses": "Browse Courses"
+  },
+  "gallery": {
+    "title": "Latte Art Gallery",
+    "subtitle": "Community",
+    "upload_btn": "Upload Attempt",
+    "like": "Like",
+    "comment": "Comment",
+    "comment_placeholder": "Add a comment",
+    "delete": "Delete upload",
+    "filter_all": "All",
+    "empty": "No uploads yet. Be the first to share!"
+  },
+  "upload": {
+    "title": "Share Your Latte Art",
+    "eyebrow": "Practice Upload",
+    "project_title": "Project title",
+    "pattern": "Pattern",
+    "course": "Related course",
+    "notes": "Practice notes",
+    "choose_image": "Choose latte art image",
+    "publish": "Publish to Gallery",
+    "uploading": "Uploading...",
+    "success": "Upload added to the community gallery."
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "One-time access per course. No subscriptions.",
+    "per_course": "per course",
+    "get_access": "Get Access",
+    "included": "What's included",
+    "access_code": "Have an access code?",
+    "redeem_here": "Redeem here"
+  },
+  "auth": {
+    "sign_in": "Sign In",
+    "sign_up": "Create Account",
+    "email": "Email",
+    "password": "Password",
+    "name": "Full Name",
+    "forgot_password": "Forgot password?",
+    "no_account": "Don't have an account?",
+    "have_account": "Already have an account?",
+    "reset_sent": "Password reset email sent. Check your inbox.",
+    "reset_password": "Reset Password",
+    "new_password": "New Password",
+    "update_password": "Update Password"
+  },
+  "footer": {
+    "tagline": "Premium latte art education for aspiring baristas.",
+    "learn": "Learn",
+    "community": "Community",
+    "company": "Company",
+    "terms": "Terms",
+    "privacy": "Privacy",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong.",
+    "back": "Back",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "search": "Search"
+  }
+}

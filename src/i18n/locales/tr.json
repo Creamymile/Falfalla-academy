@@ -1,0 +1,126 @@
+{
+  "nav": {
+    "courses": "Kurslar",
+    "gallery": "Galeri",
+    "pricing": "Fiyatlar",
+    "dashboard": "Panel",
+    "upload": "Yükle",
+    "redeem": "Kullan",
+    "profile": "Profil",
+    "admin": "Yönetim",
+    "signIn": "Giriş Yap",
+    "logOut": "Çıkış Yap"
+  },
+  "home": {
+    "hero_eyebrow": "Premium Latte Sanatı Eğitimi",
+    "hero_title": "Dökme Sanatında Ustalaşın",
+    "hero_subtitle": "Başlangıçtan yarışma seviyesine SCA uyumlu barista eğitimi. Süt dokusu, dökme kontrolü ve imza desenlerini öğrenin.",
+    "hero_cta_primary": "Kursları Keşfet",
+    "hero_cta_secondary": "Fiyatları Gör",
+    "courses_title": "Ne Öğreneceksiniz",
+    "courses_subtitle": "Sizi espresso temellerinden ileri yarışma seviyesi desenlere taşıyacak üç özenle tasarlanmış kurs.",
+    "testimonials_title": "Öğrencilerimiz Ne Diyor",
+    "testimonials_empty": "İlk yorumu siz yapın",
+    "pricing_title": "Yolculuğunuza Bugün Başlayın",
+    "pricing_subtitle": "Seviyenize uygun kursu seçin.",
+    "faq_title": "Sık Sorulan Sorular"
+  },
+  "courses": {
+    "title": "Tüm Kurslar",
+    "subtitle": "Yolunuzu seçin ve dökmeye başlayın.",
+    "enroll": "Kaydol",
+    "enrolled": "Kayıtlı",
+    "continue": "Öğrenmeye Devam Et",
+    "lessons": "ders",
+    "level_beginner": "Başlangıç",
+    "level_intermediate": "Orta",
+    "level_advanced": "İleri"
+  },
+  "lesson": {
+    "complete": "Tamamlandı Olarak İşaretle",
+    "completed": "Tamamlandı",
+    "notes": "Notlarınız",
+    "notes_placeholder": "Pratik notlarınızı buraya yazın...",
+    "resources": "Kaynaklar",
+    "practice": "Pratik Yükle",
+    "video_coming": "Video yakında",
+    "next_lesson": "Sonraki Ders",
+    "prev_lesson": "Önceki Ders"
+  },
+  "dashboard": {
+    "title": "Panel",
+    "welcome": "Tekrar hoş geldiniz",
+    "continue_learning": "Öğrenmeye Devam Et",
+    "your_courses": "Kurslarınız",
+    "progress": "İlerleme",
+    "completed": "Tamamlandı",
+    "streak": "Günlük Seri",
+    "uploads": "Yüklemeleriniz",
+    "no_courses": "Henüz herhangi bir kursa kaydolmadınız.",
+    "browse_courses": "Kurslara Göz At"
+  },
+  "gallery": {
+    "title": "Latte Sanatı Galerisi",
+    "subtitle": "Topluluk",
+    "upload_btn": "Deneme Yükle",
+    "like": "Beğen",
+    "comment": "Yorum Yap",
+    "comment_placeholder": "Yorum ekle",
+    "delete": "Yüklemeyi sil",
+    "filter_all": "Tümü",
+    "empty": "Henüz yükleme yok. İlk paylaşan siz olun!"
+  },
+  "upload": {
+    "title": "Latte Sanatınızı Paylaşın",
+    "eyebrow": "Pratik Yükleme",
+    "project_title": "Proje başlığı",
+    "pattern": "Desen",
+    "course": "İlgili kurs",
+    "notes": "Pratik notları",
+    "choose_image": "Latte sanatı görseli seç",
+    "publish": "Galeriye Yayınla",
+    "uploading": "Yükleniyor...",
+    "success": "Yükleme topluluk galerisine eklendi."
+  },
+  "pricing": {
+    "title": "Basit ve Şeffaf Fiyatlandırma",
+    "subtitle": "Kurs başına tek seferlik erişim. Abonelik yok.",
+    "per_course": "kurs başına",
+    "get_access": "Erişim Al",
+    "included": "Dahil olanlar",
+    "access_code": "Erişim kodunuz var mı?",
+    "redeem_here": "Buradan kullanın"
+  },
+  "auth": {
+    "sign_in": "Giriş Yap",
+    "sign_up": "Hesap Oluştur",
+    "email": "E-posta",
+    "password": "Şifre",
+    "name": "Tam Ad",
+    "forgot_password": "Şifremi unuttum?",
+    "no_account": "Hesabınız yok mu?",
+    "have_account": "Zaten hesabınız var mı?",
+    "reset_sent": "Şifre sıfırlama e-postası gönderildi. Gelen kutunuzu kontrol edin.",
+    "reset_password": "Şifreyi Sıfırla",
+    "new_password": "Yeni Şifre",
+    "update_password": "Şifreyi Güncelle"
+  },
+  "footer": {
+    "tagline": "Hırslı baristalar için premium latte sanatı eğitimi.",
+    "learn": "Öğren",
+    "community": "Topluluk",
+    "company": "Şirket",
+    "terms": "Şartlar",
+    "privacy": "Gizlilik",
+    "rights": "Tüm hakları saklıdır."
+  },
+  "common": {
+    "loading": "Yükleniyor...",
+    "error": "Bir şeyler ters gitti.",
+    "back": "Geri",
+    "save": "Kaydet",
+    "cancel": "İptal",
+    "close": "Kapat",
+    "search": "Ara"
+  }
+}
