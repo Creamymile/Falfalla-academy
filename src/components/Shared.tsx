@@ -80,10 +80,10 @@ export function NotFound() {
   );
 }
 
-export function Value({ icon, title, text }: { icon: React.ReactNode; title: string; text: string }) {
+export function Value({ icon, title, text, accent = "gold" }: { icon: React.ReactNode; title: string; text: string; accent?: "gold" | "green" | "brown" }) {
   return (
-    <article className="value">
-      {icon}
+    <article className={`value value-accented value-accent-${accent}`}>
+      <div className="value-icon-wrap">{icon}</div>
       <h3>{title}</h3>
       <p>{text}</p>
     </article>

@@ -22,9 +22,27 @@ export function CourseCard({
   const rating = ratingSummary(course);
   const bestSeller = courses ? isBestSeller(course, courses) : false;
 
+  const thumbnailGradient: Record<string, string> = {
+    beginner: "linear-gradient(135deg, #3a5a35 0%, #5C7A56 50%, #8aad84 100%)",
+    intermediate: "linear-gradient(135deg, #6B4423 0%, #D4A574 60%, #e8c99a 100%)",
+    advanced: "linear-gradient(135deg, #1A0E08 0%, #3D2817 50%, #6B4423 100%)",
+  };
+
   return (
     <article className="course-card">
-      <img src={course.thumbnailUrl} alt={course.title} loading="lazy" />
+      {course.thumbnailUrl ? (
+        <img src={course.thumbnailUrl} alt={course.title} loading="lazy" />
+      ) : (
+        <div className="course-thumb-placeholder" style={{ background: thumbnailGradient[course.level] ?? thumbnailGradient.beginner }} aria-hidden="true">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none">
+            <circle cx="28" cy="28" r="26" stroke="rgba(255,251,247,0.2)" strokeWidth="1.5"/>
+            <circle cx="28" cy="28" r="18" stroke="rgba(255,251,247,0.15)" strokeWidth="1"/>
+            <ellipse cx="28" cy="34" rx="14" ry="4" fill="rgba(255,251,247,0.1)" stroke="rgba(255,251,247,0.2)" strokeWidth="1"/>
+            <path d="M22 24 Q24 18 28 16 Q32 18 34 24" stroke="rgba(255,251,247,0.3)" strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+            <circle cx="28" cy="30" r="4" fill="rgba(255,251,247,0.12)" stroke="rgba(255,251,247,0.25)" strokeWidth="1"/>
+          </svg>
+        </div>
+      )}
       <div>
         <div className="badge-row">
           <span className={`badge ${course.level}`}>{course.level}</span>
